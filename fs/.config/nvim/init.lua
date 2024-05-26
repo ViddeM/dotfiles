@@ -14,3 +14,11 @@ vim.opt.rtp:prepend(lazypath)
 -- First arg is 'plugins', second arg is 'options' (optional)
 require("lazy").setup("plugins")
 
+require("vars")
+require("fns")
+require("opts")
+
+-- Format on save
+vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+

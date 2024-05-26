@@ -21,4 +21,7 @@ return {
     opts = {
     }
   },
+
+  -- Completions
+  { "nvim-cmp" },
 }
