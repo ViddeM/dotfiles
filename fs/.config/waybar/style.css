@@ -1,0 +1,174 @@
+* {
+    border: none;
+    border-radius: 0;
+    /* `otf-font-awesome` is required to be installed for icons */
+    font-family: Iosevka ss04, Helvetica, Arial, sans-serif;
+    font-size: 26px;
+    min-height: 32px;
+}
+
+window#waybar {
+    background-color: rgba(48, 47, 59, 0.7);
+    border-bottom: 3px solid rgba(55, 76, 110, 0.0);
+    color: #ffffff;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#custom-mullvad,
+#mpd {
+    padding: 0 10px;
+    margin: 0 3px;
+    color: #ffffff;
+}
+
+#clock {
+    background-color: rgba(255, 90, 90, 0.5);
+    /* background-color: #383c4a; */
+    font-weight: bold;
+    color: #ffffff;
+}
+
+#battery {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+#battery.charging {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+
+@keyframes blink {
+    to {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+label:focus {
+    background-color: #000000;
+}
+
+#cpu {
+    background-color: #6485c2;
+    color: #ffffff;
+}
+
+#memory {
+    background-color: #3560a1;
+    color: #ffffff;
+
+}
+
+#backlight {
+    background-color: #90b1b1;
+}
+
+#network {
+    background-color: #2980b9;
+}
+
+#network.disconnected {
+    background-color: #f53c3c;
+}
+
+#pulseaudio {
+    background-color: #f1c40f;
+    color: #000000;
+}
+
+#pulseaudio.muted {
+    background-color: #90b1b1;
+    color: #2a5c45;
+}
+
+#custom-media {
+    background-color: #66cc99;
+    color: #2a5c45;
+    min-width: 100px;
+}
+
+#custom-media.custom-spotify {
+    background-color: #66cc99;
+}
+
+#custom-media.custom-vlc {
+    background-color: #ffa000;
+}
+
+#temperature {
+    background-color : #1d508b ;
+    color: #ffffff;
+}
+
+#temperature.critical {
+    background-color: #eb4d4b;
+}
+
+#tray {
+    background-color: #2980b9;
+}
+
+#idle_inhibitor {
+    background-color: #ffffff;
+    color: #2d3436
+}
+
+#idle_inhibitor.activated {
+    background-color: #ecf0f1;
+    color: #2d3436;
+}
+
+#mpd {
+    background-color: #66cc99;
+    color: #2a5c45;
+}
+
+#mpd.disconnected {
+    background-color: #f53c3c;
+}
+
+#mpd.stopped {
+    background-color: #90b1b1;
+}
+
+#mpd.paused {
+    background-color: #51a37a;
+}
+
+#language {
+    background: #0e3a8b;
+    color: #ffffff;
+    padding: 0 5px;
+    margin: 0 3px;
+    min-width: 16px;
+}
+
