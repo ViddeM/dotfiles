@@ -9,7 +9,7 @@ return {
                     package_uninstalled = "",
                 }
             },
-            ensure_installed = { "pylsp", "rust_analyzer", "eslint", "gopls", "wgsl_analyzer", "lua_ls" },
+            ensure_installed = { "pylsp", "rust_analyzer", "eslint", "gopls", "wgsl_analyzer", "lua_ls", "kotlin_language_server" },
         }
     },
     {
@@ -17,20 +17,24 @@ return {
     },
     {
         "simrat39/rust-tools.nvim",
-        opts = {
-            server = {
-                on_attach = function(_, bufnr)
-                    -- Hover actions
-                    vim.keymap.set("n", "<C-space>", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
+        config = function()
+            local rust_tools = require("rust-tools")
+            rust_tools.setup({
+                server = {
+                    on_attach = function(_, bufnr)
+                        -- Hover actions
+                        vim.keymap.set("n", "<C-space>", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
 
-                    -- Code action groups
-                    vim.keymap.set("n", "<Leader>a", rust_tools.code_action_group.code_action_group, { buffer = bufnr })
-                end,
-                settings = {
-                    ["rust-analyzer"] = {},
+                        -- Code action groups
+                        vim.keymap.set("n", "<Leader>a", rust_tools.code_action_group.code_action_group,
+                            { buffer = bufnr })
+                    end,
+                    settings = {
+                        ["rust-analyzer"] = {},
+                    }
                 }
-            }
-        }
+            })
+        end,
     },
     {
         "WhoIsSethDaniel/lualine-lsp-progress.nvim"
@@ -41,7 +45,6 @@ return {
         config = function()
             require("mason-lspconfig").setup()
             local lspconfig = require("lspconfig")
-            local rust_tools = require("rust-tools")
 
             lspconfig.pylsp.setup {}
             lspconfig.rust_analyzer.setup {}
@@ -49,6 +52,7 @@ return {
             lspconfig.gopls.setup {}
             lspconfig.wgsl_analyzer.setup {}
             lspconfig.lua_ls.setup {}
+            lspconfig.kotlin_language_server.setup {}
         end,
     },
 }
