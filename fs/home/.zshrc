@@ -118,6 +118,8 @@ alias gd="git diff"
 # Ensure vs-code works on wayland
 alias code="code --enable-features=WaylandWindowDecorations --ozone-platform=wayland"
 
+alias dotfiles="/home/vidde/Documents/projects/vmcorp/dotfiles-manager/target/release/dotfiles-manager"
+
 # Zoxide
 eval "$(zoxide init zsh)"
 
