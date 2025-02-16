@@ -100,7 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias cat=batcat
+alias cat=bat
 alias ls=exa
 alias k=kubectl
 alias diff=delta
