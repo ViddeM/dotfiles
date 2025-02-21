@@ -1,0 +1,211 @@
+$text: #e0c1c1;
+//$highlight1: #fdab70; // orange
+$highlight1: #f65d76;   // akira pink
+$highlight2: white;
+$background: #151515;
+$lowlight2: #272727;
+$lowlight1: black;
+$transparent: rgba(#000000, 0.0);
+
+*{
+	all: unset;
+	font-family: "Sauce Code Pro Nerd Font Mono";
+	color: $text;
+}
+
+window {
+}
+
+.sidebar {
+	margin-top: 10px;
+	margin-left: 5px;
+	background: rgba($background, 1.0);
+	border-radius: 30px;
+	margin-bottom: 10px;
+}
+
+.workspace {
+	font-size: 18px;
+	font-weight: 400;
+	border: dashed $highlight1 2px;
+	background: $lowlight1;
+	border-radius: 30px;
+	padding-top: 3px;
+	padding-bottom: 5px;
+	margin-bottom: 6px;
+	transition: border-color 0.5s;
+}
+
+.workspace.active {
+	border: solid $highlight2 2px;
+}
+
+.workspace:hover {
+	background-color: $lowlight2;
+}
+
+.workspace:active {
+	background-color: $highlight2;
+}
+
+.workspaces {
+	margin-bottom: 10px;
+}
+
+.bottom {
+	//background-image: linear-gradient(to right, $transparent 40%, $highlight1 40%, $highlight1 60%, $transparent 60% );
+	margin-bottom: 2px;
+}
+
+.thingy {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	min-height: 20px;
+	border-top: solid $highlight1 2px;
+}
+
+.bigthingy {
+	padding-top: 8px;
+	padding-bottom: 8px;
+	min-height: 20px;
+	border-top: solid $highlight1 2px;
+	font-size: 35px;
+}
+
+scale trough {
+	all: unset;
+	background-color: #22242b;
+	box-shadow: 0 0px 5px 1px #06060b;
+	border-radius: 16px;
+	min-width: 16px;
+	min-height: 70px;
+	margin: 0px 0px 0px 0px;
+}
+
+.volbox {
+	transition: all 0.5s;
+}
+
+.volbox.active {
+	background-color: $lowlight2;
+}
+
+.volume {
+	min-height: 150px;
+}
+
+.volume trough highlight {
+	background-image: linear-gradient(to right, $highlight2 30%, $highlight1 50%, $highlight1 100% *50);
+	border-radius: 10px;
+}
+
+.vpn {
+	font-size: 40px;
+	margin: 2px;
+	margin-top: -10px;
+}
+
+.vpn label {
+	margin-top: -5px;
+	margin-bottom: -5px;
+	transition: color 0.5s;
+	color: green;
+}
+
+.vpn:hover {
+	background-color: $lowlight2;
+}
+
+.vpn:active {
+	background-color: $highlight1;
+}
+
+.vpn.connecting label {
+	color: orange;
+}
+
+.vpn.disconnected label {
+	color: red;
+}
+
+.bluetooth {
+}
+
+.bluetooth.active {
+}
+
+
+.battery-gauge {
+	color: $highlight1;
+	transition: all 0.5s;
+}
+
+.battery-gauge.low {
+	color: red;
+	animation: 1s ease-in 1s infinite alternate battery-gauge-low;
+}
+
+.battery-gauge.charging {
+	color: purple;
+}
+
+@keyframes battery-gauge-low {
+	from {
+		background-color: $background;
+	}
+
+	to {
+		background-color: red;
+	}
+}
+
+.calendar {
+	background: $lowlight2;
+}
+
+.toggleable {
+  transition: border 0.5s;
+}
+
+.toggleable.on {
+  border-left: solid 2px green;
+  border-right: solid 2px green;
+}
+
+.clickable {
+	transition: background-color 0.2s;
+}
+.clickable:hover {
+	background-color: $lowlight2;
+}
+.clickable:active {
+	background-color: $highlight1;
+}
+
+.date {
+	transition: all 0.2s;
+}
+
+.clock {
+	font-size: 25px;
+	font-weight: 400;
+	color: $highlight1;
+	margin-bottom: -1px;
+	padding-top: 18px;
+}
+.clock label {
+	padding: 0;
+	margin-top: -8px;
+}
+
+.color_scheme {
+}
+
+.pwrbtn {
+	font-size: 35px;
+	font-weight: 400;
+	border-bottom-left-radius: 30px;
+	border-bottom-right-radius: 30px;
+	margin-bottom: -2px;
+}
+

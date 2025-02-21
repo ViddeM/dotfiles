@@ -1,0 +1,260 @@
+(defwindow bar0
+	:monitor 0
+	:geometry (geometry :height "100%"
+	                    :width "40px"
+	                    :anchor "center left")
+	:stacking "fg"
+	:exclusive true
+	(centerbox :orientation "v" :active true :class "sidebar"
+		(workspaces :monitor 0)
+		(middle)
+		(bottom)
+))
+
+(defwindow bar1
+	:monitor 1
+	:geometry (geometry :height "100%"
+	                    :width "40px"
+	                    :anchor "center left")
+	:stacking "fg"
+	:exclusive true
+	(centerbox :orientation "v" :active true :class "sidebar"
+		(workspaces :monitor 1)
+		(middle)
+		(bottom)
+))
+
+(defwidget middle []
+	(box :orientation "v"
+	     :valign "center"
+	     :space-evenly false
+))
+
+(defwidget bottom []
+	(box :orientation "v"
+	     :valign "end"
+	     :class "bottom"
+	     :space-evenly false
+		(vpn)
+		(bluetooth)
+		(speaker)
+		(temperature)
+		(battery)
+		(box :class "thingy" (systray :orientation "v"))
+		(color_scheme)
+		(xwayland)
+		(kb_layout)
+		(date)
+		(clock)
+		(lock)
+))
+
+(defwidget workspaces [monitor]
+	(box :orientation "v"
+	     :valign "start"
+	     :class "workspaces"
+	     :space-evenly: false
+		; can't use a for loop here because that breaks css animations
+		(workspace :monitor monitor :n 1)
+		(workspace :monitor monitor :n 2)
+		(workspace :monitor monitor :n 3)
+		(workspace :monitor monitor :n 4)
+		(workspace :monitor monitor :n 5)
+		(workspace :monitor monitor :n 6)
+		(workspace :monitor monitor :n 7)
+		(workspace :monitor monitor :n 8)
+		(workspace :monitor monitor :n 9)
+		(workspace :monitor monitor :n 10)
+		(workspace :monitor monitor :n 11)
+		(workspace :monitor monitor :n 12)
+))
+
+(defwidget workspace [monitor n]
+	(button :visible {jq(workspaces, '.["${n}"] != null')}
+	        :class 'workspace ${workspaces?.[n]?.active == true && monitor == workspaces?.[n]?.monitor ? "active" : ""}'
+	        :onclick 'wmutils switch-workspace ${n}'
+		(label :text n))
+)
+
+(defwidget vpn []
+	(button :valign "end"
+	        :class "vpn thingy ${vpn_status.class}"
+	        :onclick "${vpn_status.on_click}"
+	        :tooltip "${vpn_status.tooltip}"
+		(label :text "${vpn_status.icon}")
+))
+
+(defwidget bluetooth []
+	(eventbox :onhover "${EWW_CMD} update show_bluetooth=true"
+	          :onhoverlost "${EWW_CMD} update show_bluetooth=false"
+		(box :orientation "v"
+		     :class "thingy bluetooth ${show_bluetooth ? "active" : ""}"
+		     :space-evenly false
+			(revealer :transition "slidedown"
+			          :reveal show_bluetooth
+				(box :orientation "v"
+					(button :class "clickable" :onclick "ba lurar" (label :text "LUR"))
+					(button :class "clickable" :onclick "ba högtalare" (label :text "HÖG"))
+					(button :class "clickable" :onclick "ba bluetoothctl disconnect" (label :text "---"))
+				)
+			)
+			(label :text "BLU")
+			(revealer :transition "slideup"
+			          :reveal {!show_bluetooth}
+				(label :text "---")
+			)
+)))
+
+(defwidget speaker []
+	(eventbox :onhover "${EWW_CMD} update show_volume=true"
+	          :onhoverlost "${EWW_CMD} update show_volume=false"
+		(box :orientation "v"
+		     :class "thingy volbox ${show_volume ? "active" : ""}"
+		     :space-evenly false
+			(revealer :transition "slidedown"
+			          :reveal show_volume
+				(scale :orientation "v"
+				       :class "volume"
+				       :flipped true
+				       :min 0
+				       :max 100
+				       :value volume_out
+				       :onchange "pamixer --set-volume {} && volshow"
+			))
+			(label :text "VOL")
+			(revealer :transition "slideup"
+			          :reveal {!show_volume}
+				(label :text {is_muted ? "MM" : volume_out})
+			)
+)))
+
+(defwidget temperature []
+	(box :orientation "v"
+	     :valign "end"
+	     :class "battery thingy"
+	     :visible {current_temp != ""}
+		(label :text "TEM")
+		(label :text "${current_temp / 1000}°")
+))
+
+(defwidget battery []
+	(box :orientation "v"
+	     :valign "end"
+	     :class "thingy"
+	     :visible {EWW_BATTERY != "" && EWW_BATTERY?.BAT0?.capacity != ""}
+		(label :text "BAT")
+		(circular-progress
+			:thickness 4.0
+			:value {EWW_BATTERY != "" ? EWW_BATTERY?.BAT0?.capacity : 100.0}
+			:class {
+				EWW_BATTERY == ""                       ? "" :
+				EWW_BATTERY?.BAT0?.status == "Charging" ? "battery-gauge charging" :
+				EWW_BATTERY?.BAT0?.capacity < 15        ? "battery-gauge low" :
+				                                          "battery-gauge"
+			}
+		)
+))
+
+(defwidget color_scheme []
+	(button
+		:onclick {
+			color_scheme == "light" ? "set-color-scheme dark && ${EWW_CMD} update color_scheme=dark"
+			                        : "set-color-scheme light && ${EWW_CMD} update color_scheme=light"
+		}
+		:hexpand true
+		:class "bigthingy clickable"
+		(label :text {
+			color_scheme == "light" ? "" : ""
+		})
+))
+
+(defwidget xwayland []
+	(button
+		:onclick {
+			xwayland_on ? "wmutils xwayland stop  && ${EWW_CMD} update xwayland_on=false"
+			            : "wmutils xwayland start && ${EWW_CMD} update xwayland_on=true"
+		}
+		:hexpand true
+		:class {"thingy clickable toggleable" + (xwayland_on ? " on" : "")}
+		(label :text "XWL")
+))
+
+(defwidget kb_layout []
+	(button :onclick "wmutils next-keyboard-layout"
+			:hexpand true
+			:class "thingy clickable"
+		(label :text keyboard_layout)
+))
+
+(defwidget date []
+	(tooltip :halign "fill"
+		(calendar :class "calendar")
+		(button :onclick "ba gnome-calendar"
+		        :hexpand true
+		        :class "thingy date clickable"
+			(box :orientation "v"
+				(label :text current_month)
+				(label :text current_day)
+))))
+
+(defwidget clock []
+	(box :orientation "v"
+	     :valign "end"
+	     :class "clock thingy"
+		(label :text current_hour)
+		(label :text current_minute)
+))
+
+(defwidget lock []
+	(button :orientation "v"
+		    :valign "end"
+		    :class "bigthingy clickable"
+		    :onclick "loginctl lock-session"
+		(label :text "󰩈")
+))
+
+(defwidget pwr []
+	(button :orientation "v"
+		    :valign "end"
+		    :class "bigthingy clickable"
+		    :onclick "${EWW_CMD} open --toggle pwrctl"
+		(label :text "⏻")
+))
+
+(defwindow pwrctl
+	:monitor 0
+	:geometry (geometry :y "5%"
+	                    :x "20px"
+	                    :height "200px"
+	                    :width "300px"
+	                    :anchor "bottom left")
+	:stacking "fg"
+	;:exclusive true
+	(box :orientation "v"
+	     :valign "end"
+	     :class "thingy"
+		(label :text "SLEEP")
+		(label :text "OFF")
+))
+
+(defvar show_volume false)
+(defvar show_bluetooth false)
+
+(defpoll workspaces      :interval "1s" "wmutils workspaces")
+(defpoll volume_out      :interval "1s" "pamixer --get-volume")
+(defpoll color_scheme    :interval "5s"  "get-color-scheme")
+
+(defpoll is_muted        :interval "1s" :initial false "pamixer --get-mute")
+
+(defpoll current_minute  :interval "1s" "date +%M")
+(defpoll current_hour    :interval "1s" "date +%H")
+(defpoll current_day     :interval "60s" "date +%d")
+(defpoll current_month   :interval "60s" "date +%b")
+(defpoll current_temp    :interval "5s"  "cat /sys/class/thermal/thermal_zone*/temp")
+
+(defpoll keyboard_layout :interval "5s"  "wmutils keyboard-layout --short")
+
+(defpoll xwayland_on     :interval "5s"  "wmutils xwayland is-running")
+
+(defvar vpn_status "{'icon': '-', 'class': 'disconnected'}" )
+
