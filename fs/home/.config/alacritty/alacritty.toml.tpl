@@ -1,5 +1,5 @@
 [font]
-{% if hostname == "defcon-7" %}
+{% if hostname == "defcon-7" || hostname == "archdesk" %}
 size = 12.0
 {% else %}
 size = 24.0
