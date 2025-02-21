@@ -36,7 +36,7 @@ input {
     mouse {
         // off
         // natural-scroll
-        // accel-speed 0.2
+        accel-speed 0.0
         // accel-profile "flat"
         // scroll-method "no-scroll"
     }
@@ -106,6 +106,18 @@ output "HP Inc. HP P34hc CN4131JLX" {
 output "Philips Consumer Electronics Company PHL 346B1C 1322131231233" {
     mode "3440x1440"
     position x=3840 y=0
+}
+
+// Home desktop main monitor
+output "Samsung Electric Company U28E570 HTPJ801556" {
+    mode "3840x2160"
+    position x=0 y=0
+}
+
+// Home secondary monitor
+output "PNP(BNQ) BenQ GL2450 3CD00873019" {
+    mode "1920x1080"
+    position x=2560 y=0
 }
 
 // Settings that influence how windows are positioned and sized.
