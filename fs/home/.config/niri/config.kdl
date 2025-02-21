@@ -239,7 +239,7 @@ layout {
 // spawn-at-startup "alacritty" "-e" "fish"
 spawn-at-startup "eww" "daemon"
 spawn-at-startup "eww" "open" "bar0"
-// spawn-at-startup "eww" "open" "bar1"
+spawn-at-startup "eww" "open" "bar1"
 spawn-at-startup "hyprpaper"
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.

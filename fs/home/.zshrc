@@ -119,6 +119,7 @@ alias gd="git diff"
 alias code="code --enable-features=WaylandWindowDecorations --ozone-platform=wayland"
 
 alias dotfiles="/home/vidde/Documents/projects/vmcorp/dotfiles-manager/target/release/dotfiles-manager"
+alias dfs="dotfiles -t /home/vidde/Documents/projects/vmcorp/dotfiles/fs/home/ sync"
 
 # Zoxide
 eval "$(zoxide init zsh)"
