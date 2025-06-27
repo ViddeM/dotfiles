@@ -16,6 +16,8 @@ input {
             // For example:
             // layout "us,ru"
             // options "grp:win_space_toggle,compose:ralt,ctrl:nocaps"
+
+            options "caps:swapescape"
         }
     }
 
@@ -96,18 +98,6 @@ output "eDP-1" {
     position x=0 y=0
 }
 
-// Volvo office curved HP
-output "HP Inc. HP P34hc CN4131JLX" {
-    mode "3440x1440"
-    position x=3840 y=0
-}
-
-// Cygni office ultra-wide
-output "Philips Consumer Electronics Company PHL 346B1C 1322131231233" {
-    mode "3440x1440"
-    position x=3840 y=0
-}
-
 // Home desktop main monitor
 output "Samsung Electric Company U28E570 HTPJ801556" {
     mode "3840x2160"
@@ -119,6 +109,168 @@ output "PNP(BNQ) BenQ GL2450 3CD00873019" {
     mode "1920x1080"
     position x=2560 y=0
 }
+
+{% if hostname == "CND207067Z" %}
+// CYGNI SCREENS:
+
+// Cygni office ultra-wide
+output "Philips Consumer Electronics Company PHL 346B1C 1322131231233" {
+    mode "3440x1440"
+
+    scale 1
+
+    position x=1920 y=0
+}
+
+// Stordalen TV (Cygni office)
+output "Philips Consumer Electronics Company 86BDL3550Q 0x01010101" {
+    mode "1920x1080"
+    position x=1920 y=0
+}
+
+// Random cygni screen
+output "Samsung Electric Company C34H89x H4ZRC03874" {
+    mode "3440x1440@59.973"
+    position x=1920 y=0
+}
+
+// END CYGNI SCREENS
+
+// VOLVO SCREENS:
+
+// Volvo office meeting room ??
+output "PNP(LNO) ThinkSmart 0x00000004" {
+    mode "1920x1080"
+
+    scale 1
+    
+    transform "normal"
+    
+    position x=1920 y=0
+}
+
+// Volvo office curved HP
+output "HP Inc. HP P34hc CN4131JLX" {
+    mode "3440x1440"
+
+    scale 1
+    
+    transform "normal"
+
+    position x=3840 y=0
+}
+
+// Volvo meeting room screen
+output "PNP(LNO) ThinkSmart 0x00000004" {
+    mode "1920x1080"
+    scale 1
+    position x=0 y=1080
+}
+
+// Volvo Office Double monitor
+output "HP Inc. HP 724pu CN44121YB6" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123QGW" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office other double monitors
+output "HP Inc. HP 724pu CN44121X33" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123QGK" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office double monitors
+output "HP Inc. HP 724pu CN44121Y9X" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123PCQ" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office double monitors
+output "HP Inc. HP 724pu CN44121YB1" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123PD8" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office double monitors
+output "HP Inc. HP 724pu CN44121Y64" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123KXR" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office double monitors
+output "HP Inc. HP 724pu CN44121Y9X" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123PCQ" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// Volvo Office double monitors
+output "HP Inc. HP 724pu CN44121YB1" {
+    mode "1920x1200@59.950"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123PD8" {
+    mode "1920x1200@59.950"
+    position x=3840 y=0
+}
+
+// VCRS Office 
+output "HP Inc. HP 724pu CN44121X33" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+output "HP Inc. HP 724pn CN44123QGK" {
+    mode "1920x1200"
+    position x=5760 y=0
+}
+
+// VCRS Office.
+output "HP Inc. HP 724pu CN44121YCW" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+output "HP Inc. HP 724pn CN44123M5X" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
+// VCRS F4 mob room
+output "HP Inc. HP P34hc G4 CNC4131K5X" {
+    mode "3440x1440"
+    position x=0 y=-1080
+}
+output "LG Electronics LG SIGNAGE 0x01010101" {
+    // mode "3840x2160"
+    mode "1920x1080"
+    position x=0 y=-2540
+}
+
+// END VOLVO SCREENS
+
+{% end %}
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -237,10 +389,17 @@ layout {
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
 // spawn-at-startup "alacritty" "-e" "fish"
+
+{% if hostname == "CND207067Z" %}
+
+{% else %}
+
 spawn-at-startup "eww" "daemon"
 spawn-at-startup "eww" "open" "bar0"
 spawn-at-startup "eww" "open" "bar1"
 spawn-at-startup "hyprpaper"
+
+{% end %}
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
@@ -275,6 +434,20 @@ animations {
 window-rule {
     geometry-corner-radius 16
     clip-to-geometry true
+}
+
+// Screen sharing highlight
+window-rule {
+    match is-window-cast-target=true
+
+    border {
+        active-color "#FF0000"
+        inactive-color "#00FF00"
+    }
+
+    shadow {
+        color "#7d0d2d70"
+    }
 }
 
 // Work around WezTerm's initial configure bug
@@ -333,7 +506,12 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
+
+    {% if hostname == "CND207067Z" %}
+    Super+Alt+L { spawn "swaylock"; }
+    {% else %} 
     Super+Alt+L { spawn "hyprlock"; }
+    {% end %}
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -345,6 +523,10 @@ binds {
     XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"; }
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }
 
     Mod+Q { close-window; }
 

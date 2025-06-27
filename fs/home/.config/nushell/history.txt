@@ -1,0 +1,141 @@
+ls
+ls | where size > 4
+ls | where size > 4.0 KiB
+ls | where size > 4.0kb
+ls | where size > 4kb
+ls | where size > 4.1kb
+cd ~/
+ls
+ls | where modified > 2days
+ls | where modified > 2d
+ls | where modified > "2 days"
+ls | where modified > 2
+ls | where modified = 2 days ago
+ls | sort-by size
+ls | sort-by size | reverse
+ls | sort-by modified | reverse 
+ls | sort-by modified | reverse | where modified > 1d
+sys
+date now | date to-table
+ls 
+ip route
+ip 
+ip addr
+cat .apport-ignore.xml
+clear
+ls
+cd ~/Documents/projects/
+ls
+cd infocore/QuickScopeRS/
+ls
+cd ../
+ls
+cd sunrise-swagger-viewer/
+ls
+cat package.json
+cat package.json  
+ls
+cd ..
+ls
+cd QuickScope/l
+cd ..
+ls
+touch asd.csv
+ls
+nvim asd.csv
+cat asd.csv
+csv asd.csv
+open asd.csv
+ls
+open customer-domain/customer-external-api-v1/README.md
+clear
+ls
+open various/newDlq-merger2023-12-04.csv
+open various/newDlq-merger2023-12-04.csv | fro mcsv
+open various/newDlq-merger2023-12-04.csv | from csv
+cat various/newDlq-merger2023-12-04.csv
+cd various/
+code ./newDlq-merger2023-12-04.csv
+open newDlq-merger2023-12-04.csv
+open newDlq-merger2023-12-04.csv | from json
+cat newDlq-merger2023-12-04.csv | from json
+mv newDlq-merger2023-12-04.csv newDlq-merger2023-12-04.json
+code ./newDlq-merger2023-12-04.json
+cat newDlq-merger2023-12-04.json
+exit
+ls
+cat newDlq-merger2023-12-07.csv
+clear
+ls
+nvim newDlq-merger2023-12-07.csv
+mv newDlq-merger2023-12-07.csv newDlq-merger2023-12-07.json
+open newDlq-merger2023-12-07.json
+code newDlq-merger2023-12-07.json
+clear
+open newDlq-merger2023-12-07.json
+code ./newDlq-merger2023-12-07.json
+rm newDlq-merger2023-12-07.json
+clear
+open newDlq-merger2023-12-08.csv
+rm newDlq-merger2023-12-08.csv
+ls
+cat newDlq-merger2023-12-08.csv
+ls
+nvim asd.txt
+code ./asd.txt
+ls
+nvim asd.txt
+cat asd.txt
+clear
+exit
+clear
+ls -alh
+ls 
+ls | sort-by size 
+ls | sort-by size | reverse
+ls | sort-by size | reverse | where size > 10KiB
+clear
+ls | sort-by size | reverse | where size > 10KiB
+clear
+ls
+ls | sort-by size | reverse | where size > 10KiB
+cat db_dealer_backup.sql
+clear
+ls
+exit
+ls
+cat dnb-file-20231219.csv
+head dnb-file-20231219.csv
+head dnb-file-20231219.csv | from-csv
+head dnb-file-20231219.csv | from 
+head dnb-file-20231219.csv | from csv
+head dnb-file-20231219.csv
+head dnb-file-20231219.csv | from csv | where MVR_Organizationno = '966840528'
+head dnb-file-20231219.csv | from csv | where "MVR_Organizationno" = '966840528'
+head dnb-file-20231219.csv | from csv
+cat dnb-file-20231219.csv | from csv
+cat dnb-file-20231219.csv | from csv | SELECT MVR_FirstName
+cat dnb-file-20231219.csv | from csv | select MVR_FirstName
+head dnb-file-20231219.csv | from csv | where "MVR_Organizationno" = 966840528
+head dnb-file-20231219.csv | from csv | where 'MVR_Organizationno' = 966840528
+head dnb-file-20231219.csv | from csv
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno, MVR_FirstName
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_Lastname
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno = ''
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno == ''
+head dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno == '966840528'
+cat dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno == '966840528'
+head --help
+head -n dnb-file-20231219.csv
+head -n 1 dnb-file-20231219.csv
+cat dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where ASO_Organizationno == '966840528'
+cat dnb-file-20231219.csv | from csv | select ASO_Organizationno MVR_FirstName MVR_LastName | where ASO_Organizationno == '966840528'
+cat dnb-file-20231219.csv | from csv | select ASO_OrganizationNo MVR_FirstName MVR_LastName | where ASO_OrganizationNo == '966840528'
+head -n 1 dnb-file-20231219.csv | grep Organization
+cat dnb-file-20231219.csv | from csv | select ALO_Organizationno MVR_FirstName MVR_LastName | where ALO_Organizationno == '966840528'
+cat dnb-file-20231219.csv | from csv | select ALO_OrganizationNo MVR_FirstName MVR_LastName | where ALO_OrganizationNo == '966840528'
+cat dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno != ''
+cat dnb-file-20231219.csv | from csv | select MVR_Organizationno MVR_FirstName MVR_LastName | where MVR_Organizationno != '' | where MVR_FirstName == ''
