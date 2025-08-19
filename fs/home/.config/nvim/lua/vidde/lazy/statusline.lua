@@ -1,11 +1,10 @@
 return {
-    {
-        "nvim-lualine/lualine.nvim",
-        dependencies = { "nvim-tree/nvim-web-devicons", opt = true },
-        opts = {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+        require('lualine').setup {
             options = {
                 icons_enabled = true,
-                theme = "auto",
+                theme = 'auto',
                 component_separators = { left = '', right = '' },
                 section_separators = { left = '', right = '' },
                 disabled_filetypes = {
@@ -16,19 +15,20 @@ return {
                 always_divide_middle = true,
                 globalstatus = false,
                 refresh = {
-                    statusline = 1000,
+                    statusline = 200,
                     tabline = 1000,
                     winbar = 1000,
                 }
             },
             sections = {
-                lualine_a = { "mode" },
+                lualine_a = { 'mode' },
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'filename' },
-                lualine_x = { {
-                    'lsp_progress',
-                    timer = { progress_enddelay = 20, spinner = 20, lsp_client_name_enddelay = 20 },
-                } },
+                lualine_x = {
+                    function()
+                        return require('lsp-progress').progress()
+                    end
+                },
                 lualine_y = { 'encoding', 'fileformat', 'filetype' },
                 lualine_z = { 'location' }
             },
@@ -45,5 +45,5 @@ return {
             inactive_winbar = {},
             extensions = {}
         }
-    }
+    end,
 }
