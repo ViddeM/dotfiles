@@ -392,6 +392,9 @@ layout {
 
 {% if hostname == "CND207067Z" %}
 
+spawn-at-startup "eww" "daemon"
+spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1" // Must open center first as the other two are positioned relative to it. (TIHI)
+
 {% else %}
 
 spawn-at-startup "eww" "daemon"
@@ -425,6 +428,105 @@ animations {
 
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     // slowdown 3.0
+
+    workspace-switch {
+        spring damping-ratio=0.8 stiffness=500 epsilon=0.0001
+    }
+
+    window-movement {
+        spring damping-ratio=0.8 stiffness=500 epsilon=0.0001
+    }
+
+    window-resize {
+        spring damping-ratio=0.5 stiffness=500 epsilon=0.0001
+    }
+
+    window-open {
+        duration-ms 600
+        custom-shader r#"
+// make the window fall into place with a slight rotation
+vec4 slide_in_from_right(vec3 coords_geo, vec3 size_geo) {
+    // For this shader, set animation curve to linear for best results.
+
+    // Simulate decelleration: square the (linear) progress.
+    float progress = 1.0 - niri_clamped_progress * niri_clamped_progress;
+
+    // Get our rotation pivot point coordinates at the bottom center of the window.
+    vec2 coords = (coords_geo.xy - vec2(0.5, 1.0)) * size_geo.xy;
+
+    // Move the window in from the right
+    coords.x -= progress * 200.0;
+
+    // Randomize rotation direction and maximum angle.
+    float random = (niri_random_seed - 0.5) / 2.0;
+    random = sign(random) - random;
+    float max_angle = 0.05 * random;
+
+    // Rotate the window around our pivot point.
+    float angle = progress * max_angle;
+    mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+    coords = rotate * coords;
+
+    // Transform the coordinates back.
+    coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 1.0), 1.0);
+
+    // Sample the window texture.
+    vec3 coords_tex = niri_geo_to_tex * coords_geo;
+    vec4 color = texture2D(niri_tex, coords_tex.st);
+
+    // Multiply by alpha to fade out.
+    return color * niri_clamped_progress;
+}
+
+// this is the main function
+vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+    return slide_in_from_right(coords_geo, size_geo);
+}
+        "#
+    }
+
+    window-close {
+        duration-ms 600
+        custom-shader r#"
+// make the window "fall down" with slight rotation.
+vec4 fall_and_rotate(vec3 coords_geo, vec3 size_geo) {
+    // For this shader, set animation curve to linear for best results.
+
+    // Simulate an accelerated fall: square the (linear) progress.
+    float progress = niri_clamped_progress * niri_clamped_progress;
+
+    // Get our rotation pivot point coordinates at the bottom center of the window.
+    vec2 coords = (coords_geo.xy - vec2(0.5, 1.0)) * size_geo.xy;
+
+    // Move the window down to simulate a fall.
+    coords.y -= progress * 200.0;
+
+    // Randomize rotation direction and maximum angle.
+    float random = (niri_random_seed - 0.5) / 2.0;
+    random = sign(random) - random;
+    float max_angle = 0.05 * random;
+
+    // Rotate the window around our pivot point.
+    float angle = progress * max_angle;
+    mat2 rotate = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+    coords = rotate * coords;
+
+    // Transform the coordinates back.
+    coords_geo = vec3(coords / size_geo.xy + vec2(0.5, 1.0), 1.0);
+
+    // Sample the window texture.
+    vec3 coords_tex = niri_geo_to_tex * coords_geo;
+    vec4 color = texture2D(niri_tex, coords_tex.st);
+
+    // Multiply by alpha to fade out.
+    return color * (1.0 - niri_clamped_progress);
+}
+
+vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+    return fall_and_rotate(coords_geo, size_geo);
+}
+        "#
+    }
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -506,9 +608,12 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
+    Mod+N hotkey-overlay-title="Dismiss Latest Notification" { spawn "sh" "-c" "makoctl dismiss"; }
 
     {% if hostname == "CND207067Z" %}
     Super+Alt+L { spawn "swaylock"; }
+    Ctrl+Shift+S { spawn "/home/vmagnus3/.scripts/quickscope.sh"; }
+    Ctrl+Shift+U { spawn "/home/vmagnus3/.scripts/uuid-generator.sh"; }
     {% else %} 
     Super+Alt+L { spawn "hyprlock"; }
     {% end %}
@@ -668,6 +773,7 @@ binds {
 
     // Switches focus between the current and the previous workspace.
     // Mod+Tab { focus-workspace-previous; }
+    Alt+Tab { focus-monitor-next; }
 
     // The following binds move the focused window in and out of a column.
     // If the window is alone, they will consume it into the nearby column to the side.

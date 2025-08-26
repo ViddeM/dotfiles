@@ -43,6 +43,7 @@ Desktop/
 .gphoto/
 .swt/
 .vpn/
+.var/
 
 .sudo_as_admin_successful
 .nvidia-settings-rc
