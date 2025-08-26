@@ -1,211 +1,278 @@
-$text: #e0c1c1;
-//$highlight1: #fdab70; // orange
-$highlight1: #f65d76;   // akira pink
-$highlight2: white;
-$background: #151515;
-$lowlight2: #272727;
-$lowlight1: black;
-$transparent: rgba(#000000, 0.0);
+// EWW.SCSS 
+// GLOBALS
+
+@import "colors.scss";
 
 *{
-	all: unset;
-	font-family: "Sauce Code Pro Nerd Font Mono";
-	color: $text;
+    all: unset;
+    font-family: "Iosevka Curly";
+    font-weight: 800;
 }
 
-window {
+.win_normal {
+    background-image: url("images/background.png");
+    background-color: $color0;
+    border: 4px solid $color9;
+    border-radius: 40px;
 }
 
-.sidebar {
-	margin-top: 10px;
-	margin-left: 5px;
-	background: rgba($background, 1.0);
-	border-radius: 30px;
-	margin-bottom: 10px;
+.win_hovered {
+    background-image: url("images/background.png");
+    background-color: $color8;
+    border: 5px solid $color9;
+    border-radius: 40px;
 }
 
-.workspace {
-	font-size: 18px;
-	font-weight: 400;
-	border: dashed $highlight1 2px;
-	background: $lowlight1;
-	border-radius: 30px;
-	padding-top: 3px;
-	padding-bottom: 5px;
-	margin-bottom: 6px;
-	transition: border-color 0.5s;
-}
-
-.workspace.active {
-	border: solid $highlight2 2px;
-}
-
-.workspace:hover {
-	background-color: $lowlight2;
-}
-
-.workspace:active {
-	background-color: $highlight2;
-}
-
+// LEFT MODULES
+// Workspaces
 .workspaces {
-	margin-bottom: 10px;
+    margin-left: 10px;
+    margin-top: -4px;
+}
+.workspace_buttons {
+    font-family: Hack;
+    font-size: 30px;
+    margin: 0px 3px 0px 2px;
+    color: $color15;
 }
 
-.bottom {
-	//background-image: linear-gradient(to right, $transparent 40%, $highlight1 40%, $highlight1 60%, $transparent 60% );
-	margin-bottom: 2px;
+// Layout
+.layout {
+    all: unset;
+    font-family: "Hack";
+    color: $color15;
+    font-size: 25px;
+    margin: -6px 0px -6px 10px;
 }
 
-.thingy {
-	padding-top: 8px;
-	padding-bottom: 8px;
-	min-height: 20px;
-	border-top: solid $highlight1 2px;
+// Music
+.music_box { 
+}
+.music_box_popup {
+    background-color: $color0;
+    background-image: url("images/background.png");
+    border: solid 5px $color9;
+    border-radius: 0 0 20 20;
+}
+.media_art {
+    border-right: solid 5px $color9;
+    border-left: solid 5px $color9;
+    background-color: $color9;
+    margin-left: 14px;
+    margin-right: 3px;
+    min-width: 40px;
+    min-height: 40px;
+}
+.media_art_popup {
+    border: solid 5px $color14;
+    border-radius: 5px;
+}
+.media_art_popup_box {
+    min-width: 140px;
+    min-height: 140px;
+    margin: 15 0 15 15;
+}
+.media_data { 
+    margin-left: 10px;
+    margin-right: 17px;
+}
+.media_data_popup {
+}
+.media_title {
+    //font-family: "Meiryo";
+    font-size: 16px;
+    color: $color15;
+    margin-bottom: -1px;
+    margin-right: -5000px;
+    margin-left: -5000px;
+    margin-top: 2px;
+}
+.media_title_popup {
+    font-size: 22px;
+    color: $color15;
+}
+.media_artist_popup {
+    font-size: 15px;
+    margin: 0 15 0 10;
+    color: $color12;
+//    background-color: #31225a;
+}
+.media_buttons {
+    font-size: 20px;
+    margin-bottom: 2px;
 }
 
-.bigthingy {
-	padding-top: 8px;
-	padding-bottom: 8px;
-	min-height: 20px;
-	border-top: solid $highlight1 2px;
-	font-size: 35px;
+.prev_button, .toggle_button, .next_button {
+    font-size: 20px;
+    min-width: 30px;
+    margin-top: 2px;
+    margin-bottom: -3px;
+//    background-color: #ffffff;
 }
 
-scale trough {
-	all: unset;
-	background-color: #22242b;
-	box-shadow: 0 0px 5px 1px #06060b;
-	border-radius: 16px;
-	min-width: 16px;
-	min-height: 70px;
-	margin: 0px 0px 0px 0px;
+.playpause_popup {
+    font-size: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: $color12;
+}
+.move_popup {
+    font-size: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: $color15;
+}
+.nextprev_popup {
+    font-size: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+    color: $color13;
+}
+.media_buttons_box_popup {
+    
+}
+.toggle_button {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+.bar_normal_popup scale trough highlight {
+    all: unset;
+    background-color: $color13;
+    border-radius: 15px;
+}
+.bar_normal_popup scale trough {
+    all: unset;
+    background-color: rgba($color15, 0.4);
+    min-height: 15px;
+    margin: 0 15 15 15;
+    border-radius: 15px;
+    border: solid 5px $color14;
+}
+.bar_highlighted_popup scale trough highlight {
+    all: unset;
+    background-color: $color15;
+    border-radius: 15px;
+}
+.bar_highlighted_popup scale trough {
+    all: unset;
+    background-color: rgba($color15, 0.4);
+    min-height: 15px;
+    margin: 0 15 15 15;
+    border-radius: 15px;
+    border: solid 5px $color14;
+}
+.bar_normal {
+    margin-top: -6px;
+    margin-bottom: -20px;
+}
+.bar_normal scale trough highlight {
+    all: unset;
+    background-color: $color12;
+    border-radius: 10px;
+}
+.bar_normal scale trough {
+    all: unset;
+    background-color: rgba($color15, 0.4);
+    min-width: 173px;
+    min-height: 10px;
+    border-radius: 10px;
+}
+.bar_highlighted {
+    margin-top: -6px;
+    margin-bottom: -20px;
+}
+.bar_highlighted scale trough highlight {
+    all: unset;
+    background-color: $color15;
+    border-radius: 10px;
+}
+.bar_highlighted scale trough {
+    all: unset;
+    background-color: rgba($color15, 0.4);
+    min-width: 173px;
+    min-height: 10px;
+    border-radius: 10px;
 }
 
-.volbox {
-	transition: all 0.5s;
+// CENTER MODULES
+.center_icons {
+    margin-right: 5px;
+    margin-left: 15px;
 }
-
-.volbox.active {
-	background-color: $lowlight2;
+.center_labels {
+    font-size: 16px;
+    margin-bottom: -3px;
+    margin-top: 1px;
+    color: $color15;
 }
-
-.volume {
-	min-height: 150px;
+.center_revealers {
+    border-radius: 5px;
+    background-color: rgba($color0, 1);
+    min-height: 32px;
+    border: solid 2px $color11;
+    color: $color12;
 }
-
-.volume trough highlight {
-	background-image: linear-gradient(to right, $highlight2 30%, $highlight1 50%, $highlight1 100% *50);
-	border-radius: 10px;
+.center_info scale trough highlight {
+    all: unset;
+    background: $color3;
+    border-radius: 10px;            
+    border: solid 2px $color11;
 }
-
-.vpn {
-	font-size: 40px;
-	margin: 2px;
-	margin-top: -10px;
-}
-
-.vpn label {
-	margin-top: -5px;
-	margin-bottom: -5px;
-	transition: color 0.5s;
-	color: green;
-}
-
-.vpn:hover {
-	background-color: $lowlight2;
-}
-
-.vpn:active {
-	background-color: $highlight1;
-}
-
-.vpn.connecting label {
-	color: orange;
-}
-
-.vpn.disconnected label {
-	color: red;
-}
-
-.bluetooth {
-}
-
-.bluetooth.active {
+.center_info scale trough {
+    all: unset;
+    background-color: rgba($color15, 0.4);
+    border-radius: 10px;
+    min-width: 110px;
+    min-height: 10px;               
 }
 
 
-.battery-gauge {
-	color: $highlight1;
-	transition: all 0.5s;
+// RIGHT MODULES 
+.power_button {
+    color: $color13;
+    font-size: 25px;
+    font-family: Caskaydia Cove Nerd Font;
+    margin: -10 18 -10 15;
 }
-
-.battery-gauge.low {
-	color: red;
-	animation: 1s ease-in 1s infinite alternate battery-gauge-low;
+.time_box {
+    margin-top: -10px;
+    margin-bottom: -10px;
 }
-
-.battery-gauge.charging {
-	color: purple;
+.time {
+    color: $color15;
+    font-size: 30px;
+    margin-bottom: -20px;
+    margin-top: -20px;
 }
-
-@keyframes battery-gauge-low {
-	from {
-		background-color: $background;
-	}
-
-	to {
-		background-color: red;
-	}
-}
-
-.calendar {
-	background: $lowlight2;
-}
-
-.toggleable {
-  transition: border 0.5s;
-}
-
-.toggleable.on {
-  border-left: solid 2px green;
-  border-right: solid 2px green;
-}
-
-.clickable {
-	transition: background-color 0.2s;
-}
-.clickable:hover {
-	background-color: $lowlight2;
-}
-.clickable:active {
-	background-color: $highlight1;
-}
-
 .date {
-	transition: all 0.2s;
+    color: $color15;
+    font-size: 30px;
+    margin-top: 8px;
 }
-
-.clock {
-	font-size: 25px;
-	font-weight: 400;
-	color: $highlight1;
-	margin-bottom: -1px;
-	padding-top: 18px;
+.kb_box {
+    color: $color15;
+    font-size: 16px;
+    margin-left: 1px;
+    margin-right: 10px;
 }
-.clock label {
-	padding: 0;
-	margin-top: -8px;
+.kb_button_active {
+    font-size: 16px;
+    margin-bottom: -3px;
+    margin-top: -3px;
+    color: rgba($color15, 1);
 }
-
-.color_scheme {
+.kb_button_inactive {
+    font-size: 16px;
+    margin-top: -3px;
+    margin-bottom: -3px;
+    color: rgba($color15, 0.4);
 }
-
-.pwrbtn {
-	font-size: 35px;
-	font-weight: 400;
-	border-bottom-left-radius: 30px;
-	border-bottom-right-radius: 30px;
-	margin-bottom: -2px;
+.cal {
+    font-size: 18px;
+    background-color: $color0;
+    background-image: url("images/background.png");
+    color: $color15;
+    border: 5px solid $color9;
+    border-radius: 0 0 20 20;
+    padding: 10px;
 }
-
