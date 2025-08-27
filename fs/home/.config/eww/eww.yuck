@@ -13,13 +13,18 @@
 
 (defvar date_reveal false)
 
+(defvar battery_exists false)
 (defpoll battery_percent :interval "1s" "rust-scripts/target/release/battery_info --percentage")
 (defpoll battery_time :interval "1s" "rust-scripts/target/release/battery_info --time")
 
-(defpoll hour :interval "1s" "scripts/time_info --hour")
-(defpoll minutes :interval "1s" "scripts/time_info --minutes")
-(defpoll type :interval "1s" "scripts/time_info --type")
-(defpoll date :interval "1s" "scripts/time_info --date")
+;; (defpoll hour :interval "1s" "scripts/time_info --hour")
+;; (defpoll minutes :interval "1s" "scripts/time_info --minutes")
+;; (defpoll type :interval "1s" "scripts/time_info --type")
+;; (defpoll date :interval "1s" "scripts/time_info --date")
+
+(defpoll hour :interval "1s" "rust-scripts/target/release/time_info --hour")
+(defpoll minutes :interval "1s" "rust-scripts/target/release/time_info --minutes")
+(defpoll date :interval "1s" "rust-scripts/target/release/time_info --date")
 
 ;; Monitor 0
 
@@ -178,26 +183,50 @@
 
 (defwidget battery_status []
   (eventbox
+    :tooltip "Battery"
+    :halign "fill"
+    :valign "fill"
+    :space-evenly false
+    :class "battery_container"
+    (box
+      (box :visible battery_exists (battery_status_inner))
+      (box :visible {battery_exists == false} (no_battery))
+    )
+  )
+)
+
+(defwidget no_battery []
+  (box
+    :orientation "h"
+    :space-evenly "false"
+    :vexpand "false"
+    :hexpand "false"
+      (label
+        :class "center_labels"
+        :text "No battery"
+        :halign "center")))
+
+(defwidget battery_status_inner []
+  (eventbox 
     :onhover "${eww} update battery_reveal=\"true\""
     :onhoverlost "${eww} update battery_reveal=\"false\""
-    :tooltip "Battery"
-    (box 
-      :orientation "h"
-      :space-evenly "false"
-      :vexpand "false"
-      :hexpand "false"
-        (image
-          :class "center_icons"
-          :path battery_image
-          :image-width 30
-          :image-height 30)
+    :orientation "h"
+    :space-evenly "false"
+    :vexpand "false"
+    :hexpand "false"
+    (box
+      (image
+        :class "center_icons"
+        :path battery_image
+        :image-width 30
+        :image-height 30)
+      (box 
+        :orientation "v"
+        :space-evenly "false"
+        :vexpand "false"
+        :hexpand "false"
+        :valign "center"
         (box 
-          :orientation "v"
-          :space-evenly "false"
-          :vexpand "false"
-          :hexpand "false"
-          :valign "center"
-          :class "center_boxes"
           (revealer
             :reveal "${!battery_reveal}"
             :transition "slidedown"
@@ -225,10 +254,7 @@
               :class "center_revealers"
               (label
                 :halign "center"
-                :text battery_time
-              )
-            )
-          )))))
+                :text battery_time))))))))
 
 ;; Current Time
 
@@ -237,27 +263,23 @@
     :tooltip "Current time"
     :onhover "${eww} update date_reveal=true"
     :onhoverlost "${eww} update date_reveal=false"
-    :cursor "pointer"
-    (button 
-      :onclick "scripts/popup_calendar"
-      (box
-        :class "time_box"
-        :space-evenly "false"
-        :orientation "h"
+    (box
+      :class "time_box"
+      :space-evenly "false"
+      :orientation "h"
+      :valign "center"
+      :halign "fill"
+      (label 
         :valign "center"
-        :halign "fill"
-        (label 
-          :valign "center"
-          :class "time"
-          :markup "<span font-weight=\"heavy\">${hour}</span><span font-weight=\"heavy\">:${minutes}</span><span font-size=\"xx-small\">${type}</span>" )
-        (revealer
-          :reveal date_reveal
-          :transition "slideright"
-          :duration "350ms"
+        :class "time"
+        :markup "<span font-weight=\"heavy\">${hour}</span><span font-weight=\"heavy\">:${minutes}</span>" )
+      (revealer
+        :reveal date_reveal
+        :transition "slideright"
+        :duration "350ms"
+        :valign "fill"
+        (label
           :valign "fill"
-          (label
-            :valign "fill"
-            :class "date"
-            :markup "<span font-size=\"xx-small\">${date}</span>"
-            ))))))
+          :class "date"
+          :markup "<span font-size=\"xx-small\">${date}</span>")))))
 
