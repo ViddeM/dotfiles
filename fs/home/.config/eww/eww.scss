@@ -23,6 +23,28 @@
     border-radius: 40px;
 }
 
+.win_left {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-top: none;
+    border-left: none;
+}
+
+.win_center {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top: none;
+}
+
+.win_right {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top: none;
+    border-right: none;
+}
+
 // LEFT MODULES
 // Workspaces
 .workspaces {
@@ -218,6 +240,7 @@
     border-radius: 10px;            
     border: solid 2px $color11;
 }
+
 .center_info scale trough {
     all: unset;
     background-color: rgba($color15, 0.4);
@@ -276,3 +299,17 @@
     border-radius: 0 0 20 20;
     padding: 10px;
 }
+
+.battery_low {
+  color: $color_battery_low;
+  background-color: $color_battery_low;
+}
+
+.battery_medium {
+  color: $color_battery_medium;
+}
+
+.battery_high {
+  color: $color_battery_high;
+}
+
