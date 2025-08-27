@@ -44,6 +44,7 @@ Desktop/
 .swt/
 .vpn/
 .var/
+.mozilla/
 
 .sudo_as_admin_successful
 .nvidia-settings-rc

@@ -43,6 +43,7 @@ dconf/
 helm/
 KeePass/
 dotfiles/
+Mullvad VPN/
 
 nvim/lazy-lock.json
 quickscope_config_old.json

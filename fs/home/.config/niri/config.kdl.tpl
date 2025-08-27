@@ -37,9 +37,16 @@ input {
 
     mouse {
         // off
+
         // natural-scroll
-        accel-speed 0.0
+
+        {% if hostname == "archdesk" %}
+        accel-profile "flat"
+        {% else %}
         // accel-profile "flat"
+        {% end %}
+
+        accel-speed 0.0
         // scroll-method "no-scroll"
     }
 
