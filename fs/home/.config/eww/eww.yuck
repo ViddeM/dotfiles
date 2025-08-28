@@ -13,7 +13,7 @@
 (defvar battery_exists false)
 
 (defpoll battery_percent :interval "1s" "rust-scripts/target/release/battery_info --percentage")
-(defpoll battery_time :interval "1s" "rust-scripts/target/release/battery_info --time")
+;; (defpoll battery_time :interval "1s" "rust-scripts/target/release/battery_info --time")
 
 (defpoll hour :interval "1s" "rust-scripts/target/release/time_info --hour")
 (defpoll minutes :interval "1s" "rust-scripts/target/release/time_info --minutes")
@@ -207,9 +207,9 @@
       :halign "center"
       :orientation "h"
       :hexpand "false"
-      (label
-        :text battery_time
-      )
+      ;;(label
+        ;;:text battery_time
+      ;;)
       (image
         :class "center_icons"
         :path battery_image
