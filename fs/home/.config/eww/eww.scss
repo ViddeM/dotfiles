@@ -301,16 +301,39 @@
 }
 
 .battery_low {
-  color: $color_battery_low;
-  background-color: $color_battery_low;
+  & label {
+    color: $color_battery_low;
+  }
+
+  & scale trough highlight {
+    background-color: $color_battery_low;
+    border-color: darker($color_battery_low);
+  }
+
+  & scale trough {
+    background-color: rgba($color_battery_low, 0.4);
+  }
 }
 
 .battery_medium {
-  color: $color_battery_medium;
+  & label {
+    color: $color_battery_medium;
+  }
 }
 
 .battery_high {
-  color: $color_battery_high;
+  & label {
+    color: $color_battery_high;
+  }
+  
+  & scale trough highlight {
+    background-color: $color_battery_high;
+    border-color: darker($color_battery_high);
+  }
+
+  & scale trough {
+    background-color: rgba($color_battery_high, 0.4);
+  }
 }
 
 .battery_container > * {

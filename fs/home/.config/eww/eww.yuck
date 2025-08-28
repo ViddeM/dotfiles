@@ -7,24 +7,20 @@
 
 (defvar eww "eww")
 
+;; Battery vars/polls
 (defvar battery_image "images/battery_10.png")
-(defvar battery_reveal false)
 (defvar battery_state "medium")
-
-(defvar date_reveal false)
-
 (defvar battery_exists false)
+
 (defpoll battery_percent :interval "1s" "rust-scripts/target/release/battery_info --percentage")
 (defpoll battery_time :interval "1s" "rust-scripts/target/release/battery_info --time")
 
-;; (defpoll hour :interval "1s" "scripts/time_info --hour")
-;; (defpoll minutes :interval "1s" "scripts/time_info --minutes")
-;; (defpoll type :interval "1s" "scripts/time_info --type")
-;; (defpoll date :interval "1s" "scripts/time_info --date")
-
 (defpoll hour :interval "1s" "rust-scripts/target/release/time_info --hour")
 (defpoll minutes :interval "1s" "rust-scripts/target/release/time_info --minutes")
-(defpoll date :interval "1s" "rust-scripts/target/release/time_info --date")
+(defpoll day_of_week :interval "60s" "rust-scripts/target/release/time_info --day-of-week")
+(defpoll day_of_month :interval "60s" "rust-scripts/target/release/time_info --day")
+(defpoll month :interval "60s" "rust-scripts/target/release/time_info --month")
+(defpoll year :interval "60s" "rust-scripts/target/release/time_info --year")
 
 ;; Monitor 0
 
@@ -144,19 +140,10 @@
   (eventbox
     :onhover "${eww} update center_class=\"${hover_window_class} win_center\""
     :onhoverlost "${eww} update center_class=\"${normal_window_class} win_center\""
-    (box 
-      :spacing 0
-      :space-evenly "false"
+    (box
+      :halign "fill"
       :class center_class
-      :orientation "h"
-      :valign "fill"
-      :hexpand "false"
-      (box
-        :orientation "h"
-        :halign "center"
-        :class "centering"
-        (time)
-      )
+      (time)
     )
   )
 )
@@ -184,13 +171,17 @@
 (defwidget battery_status []
   (eventbox
     :tooltip "Battery"
-    :halign "fill"
-    :valign "fill"
-    :space-evenly false
     :class "battery_container"
-    (box
-      (box :visible battery_exists (battery_status_inner))
-      (box :visible {battery_exists == false} (no_battery))
+    (centerbox
+      :orientation "h"
+      (box :halign "fill" :space-evenly false)
+      (box :halign "fill" :space-evenly false)
+      (box
+        :halign "end"
+        :space-evenly false
+        (box :visible battery_exists (battery_status_inner))
+        (box :visible {battery_exists == false} (no_battery))
+      )
     )
   )
 )
@@ -207,14 +198,18 @@
         :halign "center")))
 
 (defwidget battery_status_inner []
-  (eventbox 
-    :onhover "${eww} update battery_reveal=\"true\""
-    :onhoverlost "${eww} update battery_reveal=\"false\""
-    :orientation "h"
-    :space-evenly "false"
+  (box
+    :halign "center"
+    :valign "center"
     :vexpand "false"
     :hexpand "false"
     (box
+      :halign "center"
+      :orientation "h"
+      :hexpand "false"
+      (label
+        :text battery_time
+      )
       (image
         :class "center_icons"
         :path battery_image
@@ -226,60 +221,47 @@
         :vexpand "false"
         :hexpand "false"
         :valign "center"
-        (box 
-          (revealer
-            :reveal "${!battery_reveal}"
-            :transition "slidedown"
-            :duration "350ms"
-            (box
-              :orientation "v"
-              :class "center_info"
-              :valign "start"
-              (label
-                :class "center_labels battery_${battery_state}"
-                :text "${battery_percent}%"
-                :halign "center")
-              (scale
-                :min 0
-                :max 100
-                :value {battery_percent ?: 0.0}
-                :orientation "h")))
-          (revealer
-            :reveal battery_reveal
-            :transition "slideup"
-            :duration "350ms"
-            :valign "center"
-            (box
-              :valign "center"
-              :class "center_revealers"
-              (label
-                :halign "center"
-                :text battery_time))))))))
+        (box
+          :orientation "v"
+          :class "center_info battery_${battery_state}"
+          :valign "start"
+          (label
+            :class "center_labels"
+            :text "${battery_percent}%"
+            :halign "center")
+          (scale
+            :min 0
+            :max 100
+            :value {battery_percent ?: 0.0}
+            :orientation "h"))))))
 
 ;; Current Time
 
 (defwidget time []
-  (eventbox
+  (box
     :tooltip "Current time"
-    :onhover "${eww} update date_reveal=true"
-    :onhoverlost "${eww} update date_reveal=false"
-    (box
-      :class "time_box"
-      :space-evenly "false"
-      :orientation "h"
+    :class "time_box"
+    :valign "center"
+    :halign "fill"
+    :hexpand false
+    :vexpand false
+    :space-evenly true
+    (label
       :valign "center"
-      :halign "fill"
-      (label 
-        :valign "center"
-        :class "time"
-        :markup "<span font-weight=\"heavy\">${hour}</span><span font-weight=\"heavy\">:${minutes}</span>" )
-      (revealer
-        :reveal date_reveal
-        :transition "slideright"
-        :duration "350ms"
-        :valign "fill"
-        (label
-          :valign "fill"
-          :class "date"
-          :markup "<span font-size=\"xx-small\">${date}</span>")))))
+      :class "date"
+      :markup "<span font-size=\"xx-small\">${day_of_week}</span><span font-size=\"xx-small\"> ${day_of_month}/${month}</span>"
+    )
+    (label
+      :valign "center"
+      :class "time"
+      :halign "center"
+      :markup "<span font-weight=\"heavy\">${hour}</span><span font-weight=\"heavy\">:${minutes}</span>"
+    )
+    (label
+      :valign "fill"
+      :class "date"
+      :markup "<span font-size=\"xx-small\">${year}</span>"
+    )
+  )
+)
 
