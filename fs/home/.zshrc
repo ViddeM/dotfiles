@@ -4,6 +4,8 @@
 # Path to your oh-my-zsh installation. (Will require it to be installed first!)
 export ZSH="$HOME/.oh-my-zsh"
 
+
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -101,6 +103,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias cat=bat
+
 alias ls=exa
 alias k=kubectl
 alias diff=delta
