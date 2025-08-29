@@ -24,7 +24,8 @@
 (defpoll year :interval "60s" "rust-scripts/target/release/time_info --year")
 
 ;; Keyboard layout
-(defpoll layout :interval "1s" "rust-scripts/target/release/niri_keyboard --current")
+(defvar keyboard_flag "images/flag_se.png")
+(defpoll layout :interval "0.1s" "rust-scripts/target/release/niri_keyboard --current")
 
 ;; Monitor 0
 
@@ -52,7 +53,7 @@
       :anchor "top center"
       :x "0px"
       :y "0px"
-      :width "455px"
+      :width "30%"
       :height "50px"
     )
   :exclusive true
@@ -83,7 +84,7 @@
       :anchor "top left"
       :x "0px"
       :y "-50px"
-      :width "355px"
+      :width "255px"
       :height "50px"
     )
   (widgets_left)
@@ -98,7 +99,7 @@
       :anchor "top center"
       :x "0px"
       :y "0px"
-      :width "730px"
+      :width "30%"
       :height "50px"
     )
   :exclusive true
@@ -114,7 +115,7 @@
       :anchor "top right"
       :x "0px"
       :y "-50px"
-      :width "355px"
+      :width "255px"
       :height "50px"
     )
   (widgets_right)
@@ -146,6 +147,7 @@
     :onhoverlost "${eww} update center_class=\"${normal_window_class} win_center\""
     (box
       :halign "fill"
+      :hexpand false
       :class center_class
       (time)
     )
@@ -168,8 +170,8 @@
         :valign "fill"
         :orientation "h"
         :hexpand "false"
-        (battery_status)
         (keyboard_layout)
+        (battery_status)
       )
     )
   )
@@ -178,16 +180,15 @@
 ;; Battery Status
 
 (defwidget battery_status []
-  (eventbox
-    :tooltip "Battery"
-    :class "battery_container"
-    (centerbox
-      :orientation "h"
-      (box :halign "fill" :space-evenly false)
-      (box :halign "fill" :space-evenly false)
+  (box
+    :halign "center"
+    :hexpand false
+    (eventbox
+      :tooltip "Battery"
+      :class "battery_container"
       (box
-        :halign "end"
-        :space-evenly false
+        :halign "fill"
+        :space-evenly true
         (box :visible battery_exists (battery_status_inner))
         (box :visible {battery_exists == false} (no_battery))
       )
@@ -198,7 +199,7 @@
 (defwidget no_battery []
   (box
     :orientation "h"
-    :space-evenly "false"
+    :space-evenly false
     :vexpand "false"
     :hexpand "false"
       (label
@@ -213,17 +214,10 @@
     :vexpand "false"
     :hexpand "false"
     (box
-      :halign "center"
+      :halign "end"
       :orientation "h"
       :hexpand "false"
-      ;;(label
-        ;;:text battery_time
-      ;;)
-      (image
-        :class "center_icons"
-        :path battery_image
-        :image-width 30
-        :image-height 30)
+      :space-evenly false
       (box 
         :orientation "v"
         :space-evenly "false"
@@ -242,22 +236,41 @@
             :min 0
             :max 100
             :value {battery_percent ?: 0.0}
-            :orientation "h"))))))
+            :orientation "h"
+          )
+        )
+      )
+      (image
+        :class "center_icons"
+        :path battery_image
+        :halign "center"
+        :hexpand false
+        :image-width 30
+        :image-height 30
+      )
+    )
+  )
+)
 
 ;; Keyboard layout
 (defwidget keyboard_layout []
-  (box
-    :tooltip "Current layout"
-    :class "center_info"
-    :space-evenly "false"
-    :vexpand "false"
-    :hexpand "false"
-    :valign "center"
-    :orientation "h"
-    (label
-      :class "center_labels"
+  (eventbox
+    :tooltip "Layout ${layout}"
+    :onclick "niri msg action switch-layout next"
+    :cursor "pointer"
+    (box
+      :class "center_info"
+      :space-evenly "false"
+      :vexpand "false"
+      :hexpand "false"
+      :valign "center"
       :orientation "h"
-      :text layout
+      (image
+        :path keyboard_flag
+        :halign "center"
+        :image-width 30
+        :image-height 30
+      )
     )
   )
 )

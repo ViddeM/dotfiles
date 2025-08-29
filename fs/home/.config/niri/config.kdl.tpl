@@ -400,7 +400,9 @@ layout {
 {% if hostname == "CND207067Z" %}
 
 spawn-at-startup "eww" "daemon"
-spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1" // Must open center first as the other two are positioned relative to it. (TIHI)
+spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" 
+// Must open center first as the other two are positioned relative to it. (TIHI)
+spawn-at-startup "eww" "open-many" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1"
 
 {% else %}
 

@@ -44,6 +44,7 @@
     border-top: none;
     border-right: none;
     padding-right: 10px;
+    padding-left: 15px;
 }
 
 // LEFT MODULES
@@ -219,8 +220,8 @@
 
 // CENTER MODULES
 .center_icons {
-    margin-right: 5px;
-    margin-left: 15px;
+    //margin-right: 5px;
+    //margin-left: 15px;
 }
 .center_labels {
     font-size: 16px;
@@ -338,6 +339,6 @@
 }
 
 .battery_container > * {
-  margin-left: 40px
+  //margin-left: 40px
 }
 
