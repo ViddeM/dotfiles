@@ -15,12 +15,16 @@
 (defpoll battery_percent :interval "1s" "rust-scripts/target/release/battery_info --percentage")
 ;; (defpoll battery_time :interval "1s" "rust-scripts/target/release/battery_info --time")
 
+;; Time / date
 (defpoll hour :interval "1s" "rust-scripts/target/release/time_info --hour")
 (defpoll minutes :interval "1s" "rust-scripts/target/release/time_info --minutes")
 (defpoll day_of_week :interval "60s" "rust-scripts/target/release/time_info --day-of-week")
 (defpoll day_of_month :interval "60s" "rust-scripts/target/release/time_info --day")
 (defpoll month :interval "60s" "rust-scripts/target/release/time_info --month")
 (defpoll year :interval "60s" "rust-scripts/target/release/time_info --year")
+
+;; Keyboard layout
+(defpoll layout :interval "1s" "rust-scripts/target/release/niri_keyboard --current")
 
 ;; Monitor 0
 
@@ -154,14 +158,19 @@
   (eventbox
     :onhover "${eww} update right_class=\"${hover_window_class} win_right\""
     :onhoverlost "${eww} update right_class=\"${normal_window_class} win_right\""
-    (box 
-      :spacing 0
-      :space-evenly "false"
+    (box
+      :halign "fill"
       :class right_class
-      :orientation "h"
-      :valign "fill"
-      :hexpand "false"
-      (battery_status)
+      (box 
+        :space-evenly false
+        :spacing 10
+        :halign "fill"
+        :valign "fill"
+        :orientation "h"
+        :hexpand "false"
+        (battery_status)
+        (keyboard_layout)
+      )
     )
   )
 )
@@ -234,6 +243,24 @@
             :max 100
             :value {battery_percent ?: 0.0}
             :orientation "h"))))))
+
+;; Keyboard layout
+(defwidget keyboard_layout []
+  (box
+    :tooltip "Current layout"
+    :class "center_info"
+    :space-evenly "false"
+    :vexpand "false"
+    :hexpand "false"
+    :valign "center"
+    :orientation "h"
+    (label
+      :class "center_labels"
+      :orientation "h"
+      :text layout
+    )
+  )
+)
 
 ;; Current Time
 
