@@ -1,0 +1,3 @@
+[workspace]
+members = ["battery_info", "eww", "niri_keyboard", "time_info"]
+resolver = "3"
