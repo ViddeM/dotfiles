@@ -44,6 +44,8 @@ helm/
 KeePass/
 dotfiles/
 Mullvad VPN/
+espflash/
+kde.org/
 
 nvim/lazy-lock.json
 quickscope_config_old.json
@@ -57,6 +59,7 @@ vpn_script.sh
 pavucontrol.ini
 .gsd-keyboard.settings-ported
 monitors.xml~
+dolphinrc
 
 *.list
 

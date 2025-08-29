@@ -571,6 +571,11 @@ window-rule {
     default-column-width {}
 }
 
+window-rule {
+    match app-id="Mullvad VPN"
+    open-floating false
+}
+
 // Open the Firefox picture-in-picture player as floating by default.
 /-window-rule {
     // This app-id regular expression will work for both:
@@ -638,6 +643,8 @@ binds {
     XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
     XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
+    XF86MonBrightnessUp { spawn "brightnessctl" "set" "+10%"; }
+    XF86MonBrightnessDown { spawn "brightnessctl" "set" "10%-"; }
     XF86AudioPlay        allow-when-locked=true { spawn "playerctl" "play-pause"; }
     XF86AudioPrev        allow-when-locked=true { spawn "playerctl" "previous"; }
     XF86AudioNext        allow-when-locked=true { spawn "playerctl" "next"; }

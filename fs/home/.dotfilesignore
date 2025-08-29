@@ -15,7 +15,9 @@ snap/
 workspace/
 jetbrains-toolbox-2.5.2.35332/
 Desktop/
+Games/
 
+.steam/
 .mono/
 .local/
 .oh-my-zsh/
@@ -67,5 +69,9 @@ swagger_viewer_backup.sql
 xwayland-satellite.service
 quickscope_config.json
 .nmcli-history
+.yarnrc
+.steampid
+.shell.pre-oh-my-zsh
+.pulse-cookie
 
 *.pdf
