@@ -46,6 +46,7 @@ dotfiles/
 Mullvad VPN/
 espflash/
 kde.org/
+vlc/
 
 nvim/lazy-lock.json
 quickscope_config_old.json

@@ -27,6 +27,9 @@
 (defvar keyboard_flag "images/flag_se.png")
 (defpoll layout :interval "0.1s" "rust-scripts/target/release/niri_keyboard --current")
 
+;; Workspaces
+(deflisten workspaces "rust-scripts/target/release/niri_workspaces")
+
 ;; Monitor 0
 
 ;; Left bar
@@ -38,10 +41,10 @@
       :anchor "top left"
       :x "0px"
       :y "-50px"
-      :width "255px"
+      :width "285px"
       :height "50px"
     )
-  (widgets_left)
+  (widgets_left :monitor "eDP-1") ;; TODO: Support multi-monitors
 )
 
 ;; Central bar 
@@ -69,7 +72,7 @@
       :anchor "top right"
       :x "0px"
       :y "-50px"
-      :width "255px"
+      :width "285px"
       :height "50px"
     )
   (widgets_right)
@@ -84,10 +87,10 @@
       :anchor "top left"
       :x "0px"
       :y "-50px"
-      :width "255px"
+      :width "285px"
       :height "50px"
     )
-  (widgets_left)
+  (widgets_left :monitor "eDP-1")
 )
 
 ;; Central bar
@@ -115,7 +118,7 @@
       :anchor "top right"
       :x "0px"
       :y "-50px"
-      :width "255px"
+      :width "285px"
       :height "50px"
     )
   (widgets_right)
@@ -124,17 +127,19 @@
 ;; WIDGETS
 ;; Left widgets
 
-(defwidget widgets_left []
+(defwidget widgets_left [monitor]
   (eventbox
     :onhover "${eww} update left_class=\"${hover_window_class} win_left\""
     :onhoverlost "${eww} update left_class=\"${normal_window_class} win_left\""
     (box 
       :spacing 0
-      :space-evenly "false"
+      :space-evenly false
       :class left_class
       :orientation "h"
       :valign "fill"
+      :halign "fill"
       :hexpand "false"
+      (workspaces :monitor monitor)
     )
   )
 )
@@ -163,14 +168,15 @@
     (box
       :halign "fill"
       :class right_class
-      (box 
-        :space-evenly false
-        :spacing 10
+      (centerbox 
+        ;; :space-evenly false
+        ;; :spacing 10
         :halign "fill"
         :valign "fill"
         :orientation "h"
         :hexpand "false"
         (keyboard_layout)
+        (label)
         (battery_status)
       )
     )
@@ -301,6 +307,104 @@
       :valign "fill"
       :class "date"
       :markup "<span font-size=\"xx-small\">${year}</span>"
+    )
+  )
+)
+
+;; Workspaces
+
+(defwidget workspaces [monitor]
+  (centerbox
+    :orientation "h"
+    :halign "fill"
+    :valign "fill"
+    :hexpand true
+    :class "workspaces"
+    (workspaces_list :monitor monitor)
+    (box :width 4 :class "workspace_divider")
+    (windows_list :active_workspace {workspaces.outputs[monitor].active_workspace})
+  )
+)
+
+(defwidget workspaces_list [monitor]
+  (box 
+    :orientation "h"
+    :halign "center"
+    :valign "center"
+    :space-evenly false
+    :spacing 4
+    (for wsp in {workspaces.outputs[monitor].workspaces}
+      (box
+        :width 16
+        :height 16
+        :style "border-radius: 50%; background-color: ${wsp.is_active ? "green" : "red"}"
+      )
+    )
+  )
+)
+
+(defwidget windows_list [active_workspace]
+  (box
+    :orientation "h"
+    :halign "center"
+    :valign "center"
+    :space-evenly false
+    :spacing 4
+    (for column in {active_workspace.columns}
+      (column_circle
+        :active {column.is_active}
+        :urgent {column.is_urgent}
+        :num_windows {column.num_windows}
+      )
+    )
+    
+  )
+)
+
+(defwidget column_circle [active urgent num_windows]
+  (box
+    :width 20
+    :height 20
+    :style "border-radius: 50%; border: 2px solid ${active ? "green" : "${urgent ? "pink" : "red"}"};"
+    (label :text "${num_windows}" :style "font-size: 12")
+      ;;background-color: ${active ? "green" : "${urgent ? "pink" : "red"}"}"
+  )
+)
+
+(defwidget workspaces_old [monitor]
+  (box
+    :orientation "v"
+    :space-evenly false
+    :halign "start"
+    :valign "start"
+    :hexpand false
+    :class "workspaces"
+    (for wsp in {workspaces.outputs[monitor]}
+      (box
+        ;; :width 24
+        ;; :height 8
+        :hexpand false
+        :vexpand false
+        :orientation "h"
+        :space-evenly false
+        ;; :class "workspace ${wsp.is_active ? "workspace_active" : "workspace_inactive"}"
+        (for col in {wsp.columns}
+          (box
+            :width 12
+            :height 6
+            :hexpand false
+            :class "window ${wsp.is_active ? "${col.contains_focused_window ? "window_active" : "workspace_active"}" : "workspace_inactive"}"
+            ;;:class "window ${
+              ;;wsp.is_active ? 
+                ;;"${win.is_focused ? 
+                  ;;"window_active" 
+                  ;;: "workspace_active"
+                ;;}" 
+                ;;: "workspace_inactive"
+              ;;}"
+          )
+        )
+      )
     )
   )
 )

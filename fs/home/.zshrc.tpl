@@ -145,6 +145,7 @@ alias code="code --enable-features=WaylandWindowDecorations --ozone-platform=way
 
 alias dotfiles="/home/vidde/Documents/projects/vmcorp/dotfiles-manager/target/release/dotfiles-manager"
 alias dfs="dotfiles -t /home/vidde/Documents/projects/vmcorp/dotfiles/fs/home/ sync"
+alias dfm="dotfiles"
 
 # Zoxide
 eval "$(zoxide init zsh)"

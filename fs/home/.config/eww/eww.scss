@@ -48,17 +48,6 @@
 }
 
 // LEFT MODULES
-// Workspaces
-.workspaces {
-    margin-left: 10px;
-    margin-top: -4px;
-}
-.workspace_buttons {
-    font-family: Hack;
-    font-size: 30px;
-    margin: 0px 3px 0px 2px;
-    color: $color15;
-}
 
 // Layout
 .layout {
@@ -340,5 +329,40 @@
 
 .battery_container > * {
   //margin-left: 40px
+}
+
+// Workspace
+
+.workspaces {
+  margin: 10px;
+  margin-right: 20px;
+}
+
+.workspace_divider {
+  border-radius: 2px;
+  background-color: $color15;
+}
+
+// OLD
+
+.workspaces_old {
+  margin-left: 4px;
+  margin-right: 14px;
+}
+
+.window {
+  margin: 2px;
+}
+
+.window_active {
+  background-color: #00ff00;
+}
+
+.workspace_active {
+  background-color: #00ffff;
+}
+
+.workspace_inactive {
+  background-color: #ff0000;
 }
 

@@ -397,20 +397,15 @@ layout {
 // See the binds section below for more spawn examples.
 // spawn-at-startup "alacritty" "-e" "fish"
 
-{% if hostname == "CND207067Z" %}
 
 spawn-at-startup "eww" "daemon"
 spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" 
 // Must open center first as the other two are positioned relative to it. (TIHI)
 spawn-at-startup "eww" "open-many" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1"
 
+{% if hostname == "CND207067Z" %}
 {% else %}
-
-spawn-at-startup "eww" "daemon"
-spawn-at-startup "eww" "open" "bar0"
-spawn-at-startup "eww" "open" "bar1"
 spawn-at-startup "hyprpaper"
-
 {% end %}
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
