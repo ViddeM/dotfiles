@@ -1,0 +1,134 @@
+;; Keyboard layout
+(defvar keyboard_flag "images/flag_se.png")
+(defpoll layout :interval "0.1s" "rust-scripts/target/release/niri_keyboard --current")
+
+;; Battery vars/polls
+(defvar battery_image "images/battery_10.png")
+(defvar battery_state "medium")
+(defvar battery_exists false)
+
+(defpoll battery_percent :interval "1s" "rust-scripts/target/release/battery_info --percentage")
+
+(defwidget widgets_right []
+  (eventbox
+    :onhover "${EWW_CMD} update right_class=\"${hover_window_class} win_right\""
+    :onhoverlost "${EWW_CMD} update right_class=\"${normal_window_class} win_right\""
+    (box
+      :halign "fill"
+      :class right_class
+      (centerbox
+        ;; :space-evenly false
+        ;; :spacing 10
+        :halign "fill"
+        :valign "fill"
+        :orientation "h"
+        :hexpand "false"
+        (keyboard_layout)
+        (label)
+        (battery_status)
+      )
+    )
+  )
+)
+
+;; Battery Status
+
+(defwidget battery_status []
+  (box
+    :halign "center"
+    :hexpand false
+    (eventbox
+      :tooltip "Battery"
+      :class "battery_container"
+      (box
+        :halign "fill"
+        :space-evenly true
+        (box :visible battery_exists (battery_status_inner))
+        (box :visible {battery_exists == false} (no_battery))
+      )
+    )
+  )
+)
+
+(defwidget no_battery []
+  (box
+    :orientation "h"
+    :space-evenly false
+    :vexpand "false"
+    :hexpand "false"
+    (label
+      :class "center_labels"
+      :text "No battery"
+      :halign "center"
+    )
+  )
+)
+
+(defwidget battery_status_inner []
+  (box
+    :halign "center"
+    :valign "center"
+    :vexpand "false"
+    :hexpand "false"
+    (box
+      :halign "end"
+      :orientation "h"
+      :hexpand "false"
+      :space-evenly false
+      (box
+        :orientation "v"
+        :space-evenly "false"
+        :vexpand "false"
+        :hexpand "false"
+        :valign "center"
+        (box
+          :orientation "v"
+          :class "center_info battery_${battery_state}"
+          :valign "start"
+          (label
+            :class "center_labels"
+            :text "${battery_percent}%"
+            :halign "center")
+          (scale
+            :min 0
+            :max 100
+            :value {battery_percent ?: 0.0}
+            :orientation "h"
+          )
+        )
+      )
+      (image
+        :class "center_icons"
+        :path battery_image
+        :halign "center"
+        :hexpand false
+        :image-width 30
+        :image-height 30
+      )
+    )
+  )
+)
+
+;; Keyboard layout
+(defwidget keyboard_layout []
+  (eventbox
+    :tooltip "Layout ${layout}"
+    :onclick "niri msg action switch-layout next"
+    :cursor "pointer"
+    (box
+      :class "center_info"
+      :space-evenly "false"
+      :vexpand "false"
+      :hexpand "false"
+      :valign "center"
+      :orientation "h"
+      (image
+        :path keyboard_flag
+        :halign "center"
+        :image-width 30
+        :image-height 30
+      )
+    )
+  )
+)
+

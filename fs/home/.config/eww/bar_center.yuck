@@ -1,0 +1,51 @@
+;; Time / date
+(defpoll hour :interval "1s" "rust-scripts/target/release/time_info --hour")
+(defpoll minutes :interval "1s" "rust-scripts/target/release/time_info --minutes")
+(defpoll day_of_week :interval "60s" "rust-scripts/target/release/time_info --day-of-week")
+(defpoll day_of_month :interval "60s" "rust-scripts/target/release/time_info --day")
+(defpoll month :interval "60s" "rust-scripts/target/release/time_info --month")
+(defpoll year :interval "60s" "rust-scripts/target/release/time_info --year")
+
+(defwidget widgets_center []
+  (eventbox
+    :onhover "${EWW_CMD} update center_class=\"${hover_window_class} win_center\""
+    :onhoverlost "${EWW_CMD} update center_class=\"${normal_window_class} win_center\""
+    (box
+      :halign "fill"
+      :hexpand false
+      :class center_class
+      (time)
+    )
+  )
+)
+
+;; Current Time
+
+(defwidget time []
+  (box
+    :tooltip "Current time"
+    :class "time_box"
+    :valign "center"
+    :halign "fill"
+    :hexpand false
+    :vexpand false
+    :space-evenly true
+    (label
+      :valign "center"
+      :class "date"
+      :markup "<span font-size=\"xx-small\">${day_of_week}</span><span font-size=\"xx-small\"> ${day_of_month}/${month}</span>"
+    )
+    (label
+      :valign "center"
+      :class "time"
+      :halign "center"
+      :markup "<span font-weight=\"heavy\">${hour}</span><span font-weight=\"heavy\">:${minutes}</span>"
+    )
+    (label
+      :valign "fill"
+      :class "date"
+      :markup "<span font-size=\"xx-small\">${year}</span>"
+    )
+  )
+)
+

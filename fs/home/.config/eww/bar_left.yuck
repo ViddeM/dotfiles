@@ -1,0 +1,101 @@
+;; Workspaces
+(deflisten workspaces "rust-scripts/target/release/niri_workspaces")
+
+(defwidget widgets_left [monitor]
+  (eventbox
+    :onhover "${EWW_CMD} update left_class=\"${hover_window_class} win_left\""
+    :onhoverlost "${EWW_CMD} update left_class=\"${normal_window_class} win_left\""
+    (box 
+      :spacing 0
+      :space-evenly false
+      :class left_class
+      :orientation "h"
+      :valign "fill"
+      :halign "fill"
+      :hexpand "false"
+      (workspaces :monitor monitor)
+    )
+  )
+)
+
+;; Workspaces
+(defwidget workspaces [monitor]
+  (box
+    :orientation "h"
+    :halign "start"
+    :valign "fill"
+    :hexpand false
+    :class "workspaces"
+    :space-evenly false
+    (workspaces_list :output {workspaces.outputs[monitor]})
+    ;; 24 = 10 margin + 4 width + 10 margin
+    (box :width 24 :hexpand false :halign "start" :class "workspace_divider")
+    (windows_list :active_workspace {workspaces.outputs[monitor].active_workspace})
+  )
+)
+
+(defwidget workspaces_list [output]
+  (box 
+    :orientation "h"
+    :halign "start"
+    :valign "center"
+    :space-evenly false
+    :spacing 4
+    (label
+      :text "${output.current_workspace ?: "?"}/${output.workspace_count}"
+      :class "center_labels"
+    )
+  )
+)
+
+(defwidget windows_list [active_workspace]
+  (box
+    :orientation "h"
+    :halign "fill"
+    :valign "center"
+    :hexpand false
+    :vexpand false
+    :space-evenly false
+    (image 
+      :path "${active_workspace.has_more_to_left ?  "./images/arrow_left.svg" : "./images/stop.svg"}" 
+      :halign "start" 
+      :image-width 16 
+      :image-height 16 
+      :style "margin-right: 4px"
+    )
+    ;;(label :halign "start" :text "${active_workspace.has_more_to_left ? "L" : "N"}")
+    (box
+      :orientation "h"
+      :halign "start"
+      :valign "center"
+      :space-evenly false
+      :hexpand false
+      :spacing 4
+      (for column in {active_workspace.columns}
+        (column_circle
+          :active {column.is_active}
+          :urgent {column.is_urgent}
+          :num_windows {column.num_windows}
+        )
+      )
+    )
+    (image 
+      :path "${active_workspace.has_more_to_right ?  "./images/arrow_right.svg" : "./images/stop.svg"}" 
+      :halign "start" 
+      :image-width 16 
+      :image-height 16 
+      :style "margin-left: 4px"
+    )
+  )
+)
+
+(defwidget column_circle [active urgent num_windows]
+  (box
+    :width 20
+    :height 20
+    :style "border-radius: 50%; border: 2px solid ${active ? "#B8FF94" : "${urgent ? "pink" : "#FF9494"}"};"
+    (label :text "${num_windows}" :style "font-size: 12")
+      ;;background-color: ${active ? "green" : "${urgent ? "pink" : "red"}"}"
+  )
+)
+

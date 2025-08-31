@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, ops::Div};
 
 use serde::Serialize;
 
@@ -12,6 +12,8 @@ pub struct ExternalState {
 #[derive(Serialize)]
 pub struct Output {
     workspaces: Vec<Workspace>,
+    current_workspace: Option<usize>,
+    workspace_count: usize,
     active_workspace: Option<ActiveWorkspace>,
 }
 
@@ -39,17 +41,16 @@ impl From<&Column> for ActiveWorkspaceColumn {
     }
 }
 
-const COLS_ON_EACH_SIDE: usize = 2;
-
 impl From<&Workspace> for ActiveWorkspace {
     fn from(value: &Workspace) -> Self {
-        let columns = value
+        let all_columns = value
             .columns
             .iter()
             .map(|col| ActiveWorkspaceColumn::from(col))
             .collect::<Vec<_>>();
+        let total_columns = all_columns.len();
 
-        let Some((index, active)) = value
+        let Some((index, _)) = value
             .columns
             .iter()
             .enumerate()
@@ -63,38 +64,47 @@ impl From<&Workspace> for ActiveWorkspace {
             };
         };
 
-        let mut columns_before = columns
-            .iter()
-            .enumerate()
-            .filter(|(i, _)| i < &index)
-            .map(|(_, c)| c.clone())
-            .rev()
-            .take(COLS_ON_EACH_SIDE)
-            .collect::<Vec<_>>();
-        columns_before.reverse();
+        let start_column = get_start_column(total_columns, index);
 
-        let columns_after = columns
-            .iter()
-            .enumerate()
-            .filter(|(i, _)| i > &index)
-            .map(|(_, c)| c.clone())
-            .take(COLS_ON_EACH_SIDE)
-            .collect::<Vec<_>>();
-
-        columns_before.push(active.into());
-
-        let columns = columns_before
+        let columns = all_columns
             .into_iter()
-            .chain(columns_after.into_iter())
+            .skip(start_column)
+            .take(MAX_COLS)
             .collect::<Vec<_>>();
 
         Self {
-            has_more_to_left: index > COLS_ON_EACH_SIDE,
-            has_more_to_right: columns.iter().count().checked_sub(index + 1).unwrap_or(0)
-                > COLS_ON_EACH_SIDE,
+            has_more_to_left: start_column > 0,
+            has_more_to_right: (start_column + columns.len()) < total_columns, // TODO: Might be some off-by-one error here. Think later
             columns,
         }
     }
+}
+
+const MAX_COLS: usize = 7;
+
+fn get_start_column(total_columns: usize, active_column_index: usize) -> usize {
+    if total_columns == 0 {
+        return 0;
+    }
+
+    let optimal_cols_on_each_size = (MAX_COLS as f32).div(2.0).floor() as usize;
+
+    let left_initial_index = active_column_index
+        .checked_sub(optimal_cols_on_each_size)
+        .unwrap_or(0);
+    let taken_left = active_column_index - left_initial_index;
+    let missing_left = optimal_cols_on_each_size - taken_left;
+
+    let right_optimal_index = active_column_index + optimal_cols_on_each_size + missing_left;
+    let capped_right = (total_columns - 1).min(right_optimal_index);
+    let taken_right = capped_right - active_column_index;
+    let missing_right = optimal_cols_on_each_size
+        .checked_sub(taken_right)
+        .unwrap_or(0);
+
+    let corrected_left = left_initial_index.checked_sub(missing_right).unwrap_or(0);
+
+    corrected_left
 }
 
 #[derive(Serialize)]
@@ -199,17 +209,65 @@ impl From<&InternalState> for ExternalState {
                 .map(|(output, workspaces)| {
                     let active = workspaces
                         .iter()
-                        .find(|ws| ws.is_active)
-                        .map(|ws| ws.into());
+                        .enumerate()
+                        .find(|(_, ws)| ws.is_active)
+                        .map(|(index, ws)| (index, ws.into()));
+
+                    let active_index = active.as_ref().map(|(i, _)| i + 1);
+                    let active_ws = active.map(|(_, ws)| ws);
+                    let total_ws_count = workspaces.len();
+
                     (
                         output,
                         Output {
                             workspaces,
-                            active_workspace: active,
+                            active_workspace: active_ws,
+                            current_workspace: active_index,
+                            workspace_count: total_ws_count,
                         },
                     )
                 })
                 .collect(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn get_start_column_with_room_to_spare() {
+        assert_eq!(get_start_column(23, 15), 12);
+    }
+
+    #[test]
+    fn get_start_column_too_few_left() {
+        assert_eq!(get_start_column(10, 1), 0);
+    }
+
+    #[test]
+    fn get_start_column_too_few_right() {
+        assert_eq!(get_start_column(19, 17), 12)
+    }
+
+    #[test]
+    fn get_start_column_no_cols() {
+        assert_eq!(get_start_column(0, 0), 0);
+    }
+
+    #[test]
+    fn get_start_column_active_is_at_start() {
+        assert_eq!(get_start_column(8, 0), 0);
+    }
+
+    #[test]
+    fn get_start_column_active_is_at_end() {
+        assert_eq!(get_start_column(8, 7), 1);
+    }
+
+    #[test]
+    fn get_start_column_too_few_both_ends() {
+        assert_eq!(get_start_column(3, 1), 0);
     }
 }
