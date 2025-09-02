@@ -214,6 +214,17 @@ output "HP Inc. HP 724pn CN44123PD8" {
     position x=3840 y=0
 }
 
+// Double monitor ecom area
+output "HP Inc. HP 724pu CN44121YCT" {
+    mode "1920x1200"
+    position x=1920 y=0
+}
+ 
+output "HP Inc. HP 724pn CN44123Q7Z" {
+    mode "1920x1200"
+    position x=3840 y=0
+}
+
 // Volvo Office double monitors
 output "HP Inc. HP 724pu CN44121Y64" {
     mode "1920x1200"
@@ -399,9 +410,10 @@ layout {
 
 
 spawn-at-startup "eww" "daemon"
-spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" 
+spawn-at-startup "~/.config/eww/rust-scripts/target/release/eww_setup"
+// spawn-at-startup "eww" "open-many" "bar_center_0" "bar_center_1" 
 // Must open center first as the other two are positioned relative to it. (TIHI)
-spawn-at-startup "eww" "open-many" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1"
+// spawn-at-startup "eww" "open-many" "bar_right_0" "bar_right_1" "bar_left_0" "bar_left_1"
 
 {% if hostname == "CND207067Z" %}
 {% else %}

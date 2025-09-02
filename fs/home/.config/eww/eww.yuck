@@ -14,8 +14,8 @@
 ;; Monitor 0
 
 ;; Left bar
-(defwindow bar_left_0
-  :monitor 0
+(defwindow bar_left [monitor]
+  :monitor monitor
   :stacking "fg"
   :geometry 
     (geometry 
@@ -25,12 +25,12 @@
       :width "285px"
       :height "50px"
     )
-  (widgets_left :monitor "eDP-1") ;; TODO: Support multi-monitors
+  (widgets_left :monitor monitor) ;; TODO: Support multi-monitors
 )
 
 ;; Central bar 
-(defwindow bar_center_0
-  :monitor 0
+(defwindow bar_center [monitor]
+  :monitor monitor
   :stacking "fg"
   :geometry 
     (geometry 
@@ -45,8 +45,8 @@
 )
 
 ;; Right bar
-(defwindow bar_right_0
-  :monitor 0
+(defwindow bar_right [monitor]
+  :monitor monitor
   :stacking "fg"
   :geometry 
     (geometry 
@@ -71,7 +71,7 @@
       :width "285px"
       :height "50px"
     )
-  (widgets_left :monitor "eDP-1")
+  (widgets_left :monitor "DP-2")
 )
 
 ;; Central bar
@@ -93,6 +93,52 @@
 ;; Right bar
 (defwindow bar_right_1
   :monitor 1
+  :stacking "fg"
+  :geometry 
+    (geometry 
+      :anchor "top right"
+      :x "0px"
+      :y "-50px"
+      :width "285px"
+      :height "50px"
+    )
+  (widgets_right)
+)
+
+;; Left bar
+(defwindow bar_left_2
+  :monitor 2
+  :stacking "fg"
+  :geometry 
+    (geometry 
+      :anchor "top left"
+      :x "0px"
+      :y "-50px"
+      :width "285px"
+      :height "50px"
+    )
+  (widgets_left :monitor "HDMI-A-1")
+)
+
+;; Central bar
+(defwindow bar_center_2
+  :monitor 2
+  :stacking "fg"
+  :geometry 
+    (geometry 
+      :anchor "top center"
+      :x "0px"
+      :y "0px"
+      :width "30%"
+      :height "50px"
+    )
+  :exclusive true
+  (widgets_center)
+)
+
+;; Right bar
+(defwindow bar_right_2
+  :monitor 2
   :stacking "fg"
   :geometry 
     (geometry 

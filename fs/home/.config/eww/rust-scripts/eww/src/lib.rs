@@ -1,4 +1,5 @@
 use std::{
+    collections::HashMap,
     io,
     path::{Path, PathBuf},
     process::Command,
@@ -41,6 +42,42 @@ impl EwwClient {
         command.output()?;
 
         Ok(())
+    }
+
+    pub fn close_all(&self) -> EwwResult<()> {
+        self.eww_single("close-all".into())
+    }
+
+    pub fn open(&self, name: String) -> EwwResult<()> {
+        self.open_with_args(name, None, &HashMap::new())
+    }
+
+    pub fn open_with_args(
+        &self,
+        name: String,
+        id: Option<String>,
+        args: &HashMap<String, String>,
+    ) -> EwwResult<()> {
+        let mut cmd = vec!["open".into(), name];
+        args.into_iter().for_each(|(k, v)| {
+            let arg = format!("{k}={v}");
+            cmd.push("--arg".into());
+            cmd.push(arg)
+        });
+
+        if let Some(id) = id {
+            cmd.push("--id".into());
+            cmd.push(id);
+        }
+
+        self.eww(cmd)
+    }
+
+    pub fn open_many(&self, names_and_args: Vec<String>) -> EwwResult<()> {
+        let mut names_and_args = names_and_args;
+        names_and_args.insert(0, "open-many".into());
+        println!("Full command {names_and_args:?}");
+        self.eww(names_and_args)
     }
 
     pub fn update(&self, key: &str, value: &str) -> EwwResult<()> {
