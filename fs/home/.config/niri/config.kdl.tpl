@@ -82,62 +82,6 @@ gestures {
     }
 }
 
-// Settings that influence how windows are positioned and sized.
-// Find more information on the wiki:
-// https://github.com/YaLTeR/niri/wiki/Configuration:-Layout
-layout {
-    background-color "transparent"
-    // When to center a column when changing focus, options are:
-    // - "never", default behavior, focusing an off-screen column will keep at the left
-    //   or right edge of the screen.
-    // - "always", the focused column will always be centered.
-    // - "on-overflow", focusing a column will center it if it doesn't fit
-    //   together with the previously focused column.
-    center-focused-column "never"
-    // You can customize the widths that "switch-preset-column-width" (Mod+R) toggles between.
-    preset-column-widths {
-        // Proportion sets the width as a fraction of the output width, taking gaps into account.
-        // For example, you can perfectly fit four windows sized "proportion 0.25" on an output.
-        // The default preset widths are 1/3, 1/2 and 2/3 of the output.
-        proportion 0.33333
-        proportion 0.5
-        proportion 0.66667
-        // Fixed sets the width in logical pixels exactly.
-        // fixed 1920
-    }
-    // You can also customize the heights that "switch-preset-window-height" (Mod+Shift+R) toggles between.
-    // preset-window-heights { }
-    // You can change the default width of the new windows.
-    default-column-width { proportion 0.5; }
-    // If you leave the brackets empty, the windows themselves will decide their initial width.
-    // default-column-width {}
-    // By default focus ring and border are rendered as a solid background rectangle
-    // behind windows. That is, they will show up through semitransparent windows.
-    // This is because windows using client-side decorations can have an arbitrary shape.
-    //
-    // If you don't like that, you should uncomment `prefer-no-csd` below.
-    // Niri will draw focus ring and border *around* windows that agree to omit their
-    // client-side decorations.
-    //
-    // Alternatively, you can override it with a window rule called
-    // `draw-border-with-background`.
-    border {
-        off
-        width 4
-        active-color   "#707070"      // Neutral gray
-        inactive-color "#d0d0d0"      // Light gray
-        urgent-color   "#cc4444"      // Softer red
-    }
-    shadow {
-        softness 30
-        spread 5
-        offset x=0 y=5
-        color "#0007"
-    }
-    struts {
-    }
-}
-
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
 // If the client will specifically ask for CSD, the request will be honored.
 // Additionally, clients will be informed that they are tiled, removing some client-side rounded corners.
@@ -279,3 +223,25 @@ include "dms/alttab.kdl"
 include "dms/binds.kdl"
 include "dms/outputs.kdl"
 include "dms/cursor.kdl"
+
+// We put this after the dms include in order to override its settings.
+layout {
+    focus-ring {
+        width 1
+    }
+
+    border {
+        width 1
+        inactive-color "#353535"
+    }
+    
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    center-focused-column "never"
+}
+
