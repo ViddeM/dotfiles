@@ -1,3 +1,4 @@
+libreoffice/
 teams-for-linux/
 google-chrome/
 Code/
@@ -48,10 +49,13 @@ espflash/
 kde.org/
 vlc/
 discord/
+uv/
+turborepo/
 bruno/
 torbrowser/
 haruna/
 Electron/
+nushell/history.txt
 
 nvim/lazy-lock.json
 quickscope_config_old.json

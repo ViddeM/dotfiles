@@ -1,0 +1,3 @@
+set PROMPT='%F{blue} %~%f %F{orange} as %f %F{purple}%n%f %g %F{brightgreen} ❯ %f'
+
+alias dfm='~/Documents/projects/other/dotfiles-manager/target/release/dotfiles-manager'
