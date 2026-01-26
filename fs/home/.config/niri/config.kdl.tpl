@@ -76,7 +76,7 @@ input {
 }
 
 gestures {
-    hot-corners {
+    /-hot-corners {
         top-left
         top-right
     }
