@@ -10,7 +10,6 @@ opacity = 1.0
 
 [cursor]
 style = { shape = "Block", blinking = "On" }
-blink-interval = 500
 unfocused_hollow = true
 
 [mouse]
