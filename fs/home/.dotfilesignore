@@ -73,5 +73,7 @@ quickscope_config.json
 .steampid
 .shell.pre-oh-my-zsh
 .pulse-cookie
+.aoc_session_cookie
+.yarn/
 
 *.pdf

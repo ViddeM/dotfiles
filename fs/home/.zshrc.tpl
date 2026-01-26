@@ -155,7 +155,7 @@ alias dfm="dotfiles"
 # Zoxide
 eval "$(zoxide init zsh)"
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/.cargo/bin:$PATH
 
 # Starship prompt
 eval "$(starship init zsh)"

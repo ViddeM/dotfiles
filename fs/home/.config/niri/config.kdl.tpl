@@ -111,6 +111,12 @@ output "Samsung Electric Company U28E570 HTPJ801556" {
     position x=0 y=0
 }
 
+// Home new main monitor
+output "ASUSTek COMPUTER INC XG32UCWMG T7LMQS015616" {
+    mode "3840x2160@240.016"
+    position x=0 y=0
+}
+
 // Home secondary monitor
 output "PNP(BNQ) BenQ GL2450 3CD00873019" {
     mode "1920x1080"
@@ -417,7 +423,9 @@ spawn-at-startup "~/.config/eww/rust-scripts/target/release/eww_setup"
 
 {% if hostname == "CND207067Z" %}
 {% else %}
-spawn-at-startup "hyprpaper"
+// spawn-at-startup "hyprpaper"
+spawn-at-startup "awww-daemon"
+spawn-sh-at-startup "awww ~/.config/wallpapers/space-wallpaper.jpg"
 {% end %}
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.

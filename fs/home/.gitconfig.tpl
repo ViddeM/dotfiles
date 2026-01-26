@@ -29,6 +29,9 @@
 [merge]
     conflictstyle = zdiff3
 
+[init]
+    defaultBranch = master
+
 {% if hostname == "CND207067Z" %}
 [includeIf "gitdir:~/Documents/projects/vcrs/"]
     path = ~/Documents/projects/vcrs/.gitconfig
