@@ -1,4 +1,7 @@
+{% if hostname == "CND207067Z" %}
+{% else %}
 [general]
+{% end %}
 import = [
     "~/.config/alacritty/dank-theme.toml"
 ]

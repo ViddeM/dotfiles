@@ -17,6 +17,7 @@ jetbrains-toolbox-2.5.2.35332/
 Desktop/
 Games/
 
+.ansible/
 .steam/
 .mono/
 .local/
@@ -47,7 +48,16 @@ Games/
 .vpn/
 .var/
 .mozilla/
+.minecraft/
+.nuget/
+.conda/
+.dcp/
+.microsoft/
+.yarn/
+.templateengine/
+.aspnet/
 
+anaconda3/
 .sudo_as_admin_successful
 .nvidia-settings-rc
 .zcompdump*
@@ -73,6 +83,8 @@ quickscope_config.json
 .steampid
 .shell.pre-oh-my-zsh
 .pulse-cookie
+.vrsh_history
+.node_repl_history
 .aoc_session_cookie
 .yarn/
 
