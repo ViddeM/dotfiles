@@ -146,7 +146,7 @@ alias code="code --enable-features=WaylandWindowDecorations --ozone-platform=way
 {% if hostname == "CND207067Z" %}
 alias dotfiles="~/Documents/projects/other/dotfiles-manager/target/release/dotfiles-manager"
 {% else %}
-alias dotfiles="/home/vidde/Documents/projects/vmcorp/dotfiles-manager/target/release/dotfiles-manager"
+alias dotfiles="/home/vidde/Documents/projects/vmcorp/dotfiles-manager/target/release/dotfiles-manager --template-dir ~/Documents/projects/vmcorp/dotfiles/fs/home"
 {% end %}
 
 alias dfs="dotfiles -t /home/vidde/Documents/projects/vmcorp/dotfiles/fs/home/ sync"
